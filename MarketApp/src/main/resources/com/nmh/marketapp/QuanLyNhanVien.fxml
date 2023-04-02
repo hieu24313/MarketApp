@@ -1,0 +1,254 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="555.0" prefWidth="825.0" stylesheets="@Style.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.nmh.marketapp.QuanLyNhanVien">
+   <columnConstraints>
+      <ColumnConstraints hgrow="SOMETIMES" maxWidth="358.39996337890625" minWidth="10.0" prefWidth="358.39996337890625" />
+      <ColumnConstraints hgrow="SOMETIMES" maxWidth="195.20001220703125" minWidth="5.600012207031227" prefWidth="9.600048828125011" />
+      <ColumnConstraints hgrow="SOMETIMES" maxWidth="454.3999877929688" minWidth="10.0" prefWidth="450.399951171875" />
+   </columnConstraints>
+   <rowConstraints>
+      <RowConstraints maxHeight="116.79999389648438" minHeight="10.0" prefHeight="41.20000305175781" vgrow="SOMETIMES" />
+      <RowConstraints maxHeight="398.39999694824223" minHeight="10.0" prefHeight="263.59999694824216" vgrow="SOMETIMES" />
+      <RowConstraints maxHeight="243.79996337890623" minHeight="10.0" prefHeight="238.19998779296873" vgrow="SOMETIMES" />
+      <RowConstraints maxHeight="140.60001220703123" minHeight="4.60003662109375" prefHeight="10.20001220703125" vgrow="SOMETIMES" />
+   </rowConstraints>
+   <children>
+      <TableView fx:id="tbNhanVien" prefHeight="220.0" prefWidth="297.0" GridPane.columnSpan="3" GridPane.rowIndex="1">
+         <GridPane.margin>
+            <Insets left="10.0" right="10.0" top="10.0" />
+         </GridPane.margin>
+      </TableView>
+      <Pane prefHeight="200.0" prefWidth="200.0" styleClass="Tieude" />
+      <Pane prefHeight="200.0" prefWidth="200.0" styleClass="Tieude" GridPane.columnIndex="1" />
+      <Pane prefHeight="200.0" prefWidth="200.0" styleClass="Tieude" GridPane.columnIndex="2" />
+      <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="Subject" text="Quản lý nhân viên" GridPane.columnSpan="3" GridPane.halignment="CENTER">
+         <font>
+            <Font size="19.0" />
+         </font>
+      </Text>
+      <VBox prefHeight="200.0" prefWidth="100.0" GridPane.rowIndex="2">
+         <children>
+            <VBox prefHeight="98.0" prefWidth="358.0">
+               <children>
+                  <HBox prefHeight="47.0" prefWidth="358.0">
+                     <children>
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Nhập mã hoặc tên nhân viên :" wrappingWidth="168.24609375">
+                           <HBox.margin>
+                              <Insets left="10.0" top="20.0" />
+                           </HBox.margin>
+                        </Text>
+                     </children>
+                  </HBox>
+                  <HBox prefHeight="50.0" prefWidth="358.0">
+                     <children>
+                        <TextField fx:id="txtSearch" prefHeight="26.0" prefWidth="300.0">
+                           <HBox.margin>
+                              <Insets left="20.0" />
+                           </HBox.margin>
+                        </TextField>
+                     </children>
+                  </HBox>
+               </children>
+            </VBox>
+            <VBox prefHeight="200.0" prefWidth="100.0">
+               <children>
+                  <HBox prefHeight="85.0" prefWidth="358.0">
+                     <children>
+                        <Button mnemonicParsing="false" prefHeight="26.0" prefWidth="140.0" styleClass="vienkhung" text="Thêm" textFill="WHITE">
+                           <HBox.margin>
+                              <Insets left="20.0" right="20.0" top="10.0" />
+                           </HBox.margin>
+                        </Button>
+                        <Button mnemonicParsing="false" prefHeight="26.0" prefWidth="140.0" styleClass="vienkhung" text="Sửa" textFill="WHITE">
+                           <HBox.margin>
+                              <Insets right="20.0" top="10.0" />
+                           </HBox.margin>
+                        </Button>
+                     </children>
+                  </HBox>
+                  <HBox prefHeight="85.0" prefWidth="200.0">
+                     <children>
+                        <Button mnemonicParsing="false" prefHeight="26.0" prefWidth="140.0" styleClass="vienkhung" text="Xóa" textFill="WHITE">
+                           <HBox.margin>
+                              <Insets bottom="10.0" left="20.0" right="20.0" top="10.0" />
+                           </HBox.margin>
+                        </Button>
+                        <Button mnemonicParsing="false" prefHeight="26.0" prefWidth="140.0" styleClass="vienkhung" text="Khác" textFill="WHITE">
+                           <HBox.margin>
+                              <Insets right="20.0" top="10.0" />
+                           </HBox.margin>
+                        </Button>
+                     </children>
+                  </HBox>
+                  <HBox prefHeight="85.0" prefWidth="200.0">
+                     <children>
+                        <Button mnemonicParsing="false" prefHeight="26.0" prefWidth="140.0" styleClass="vienkhung" text="Cập nhật" textFill="WHITE">
+                           <HBox.margin>
+                              <Insets bottom="10.0" left="20.0" right="20.0" top="10.0" />
+                           </HBox.margin>
+                        </Button>
+                        <Button fx:id="btnThoat" mnemonicParsing="false" onAction="#thoatQuanLy" prefHeight="26.0" prefWidth="140.0" styleClass="vienkhung" text="Thoát" textFill="WHITE">
+                           <HBox.margin>
+                              <Insets right="20.0" top="10.0" />
+                           </HBox.margin>
+                        </Button>
+                     </children>
+                  </HBox>
+               </children>
+            </VBox>
+         </children>
+      </VBox>
+      <VBox prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="2" GridPane.rowIndex="2">
+         <children>
+            <VBox prefHeight="200.0" prefWidth="100.0">
+               <children>
+                  <HBox prefHeight="100.0" prefWidth="200.0">
+                     <children>
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Mã nhân viên :">
+                           <HBox.margin>
+                              <Insets right="15.0" />
+                           </HBox.margin>
+                        </Text>
+                        <TextField prefHeight="26.0" prefWidth="292.0" />
+                     </children>
+                     <VBox.margin>
+                        <Insets left="20.0" top="6.0" />
+                     </VBox.margin>
+                     <opaqueInsets>
+                        <Insets />
+                     </opaqueInsets>
+                  </HBox>
+                  <HBox prefHeight="100.0" prefWidth="290.0">
+                     <children>
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Họ nhân viên : ">
+                           <HBox.margin>
+                              <Insets left="20.0" right="10.0" />
+                           </HBox.margin>
+                        </Text>
+                        <TextField prefHeight="26.0" prefWidth="290.0">
+                           <HBox.margin>
+                              <Insets bottom="2.0" left="3.0" />
+                           </HBox.margin>
+                        </TextField>
+                     </children>
+                     <VBox.margin>
+                        <Insets top="10.0" />
+                     </VBox.margin>
+                     <opaqueInsets>
+                        <Insets />
+                     </opaqueInsets>
+                  </HBox>
+                  <HBox prefHeight="100.0" prefWidth="200.0">
+                     <children>
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Tên nhân viên : ">
+                           <HBox.margin>
+                              <Insets left="20.0" top="7.0" />
+                           </HBox.margin>
+                        </Text>
+                        <TextField prefHeight="26.0" prefWidth="290.0">
+                           <HBox.margin>
+                              <Insets left="8.0" top="5.0" />
+                           </HBox.margin>
+                        </TextField>
+                     </children>
+                     <opaqueInsets>
+                        <Insets />
+                     </opaqueInsets>
+                  </HBox>
+                  <HBox prefHeight="100.0" prefWidth="200.0">
+                     <children>
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Địa chỉ : ">
+                           <HBox.margin>
+                              <Insets left="20.0" right="12.0" top="3.0" />
+                           </HBox.margin>
+                        </Text>
+                        <TextField prefHeight="26.0" prefWidth="290.0">
+                           <HBox.margin>
+                              <Insets left="34.0" />
+                           </HBox.margin>
+                        </TextField>
+                     </children>
+                     <VBox.margin>
+                        <Insets top="10.0" />
+                     </VBox.margin>
+                     <opaqueInsets>
+                        <Insets />
+                     </opaqueInsets>
+                  </HBox>
+                  <HBox prefHeight="26.0" prefWidth="454.0">
+                     <children>
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Tài khoản : ">
+                           <HBox.margin>
+                              <Insets left="20.0" top="2.0" />
+                           </HBox.margin>
+                        </Text>
+                        <TextField prefHeight="26.0" prefWidth="290.0">
+                           <HBox.margin>
+                              <Insets bottom="5.0" left="30.0" />
+                           </HBox.margin>
+                        </TextField>
+                     </children>
+                     <VBox.margin>
+                        <Insets top="10.0" />
+                     </VBox.margin>
+                     <opaqueInsets>
+                        <Insets />
+                     </opaqueInsets>
+                  </HBox>
+                  <HBox prefHeight="100.0" prefWidth="290.0">
+                     <children>
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Mật khẩu : ">
+                           <HBox.margin>
+                              <Insets left="20.0" right="10.0" top="3.0" />
+                           </HBox.margin>
+                        </Text>
+                        <TextField prefHeight="26.0" prefWidth="290.0">
+                           <HBox.margin>
+                              <Insets left="22.0" />
+                           </HBox.margin>
+                        </TextField>
+                     </children>
+                     <opaqueInsets>
+                        <Insets />
+                     </opaqueInsets>
+                  </HBox>
+                  <HBox prefHeight="100.0" prefWidth="290.0">
+                     <children>
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Loại nhân viên : ">
+                           <HBox.margin>
+                              <Insets left="20.0" right="3.0" top="6.0" />
+                           </HBox.margin>
+                        </Text>
+                        <TextField prefHeight="26.0" prefWidth="290.0">
+                           <HBox.margin>
+                              <Insets left="2.0" top="5.0" />
+                           </HBox.margin>
+                        </TextField>
+                     </children>
+                     <opaqueInsets>
+                        <Insets />
+                     </opaqueInsets>
+                  </HBox>
+               </children>
+            </VBox>
+         </children>
+      </VBox>
+      <Pane prefHeight="200.0" prefWidth="200.0" styleClass="Tieude" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+      <Pane prefHeight="37.0" prefWidth="360.0" styleClass="Tieude" GridPane.rowIndex="3" />
+      <Pane prefHeight="200.0" prefWidth="200.0" styleClass="Tieude" GridPane.columnIndex="2" GridPane.rowIndex="3" />
+      <Pane prefHeight="200.0" prefWidth="200.0" styleClass="Tieude" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+   </children>
+</GridPane>

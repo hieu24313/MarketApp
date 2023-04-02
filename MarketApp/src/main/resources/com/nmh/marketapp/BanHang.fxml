@@ -1,0 +1,241 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="554.0" prefWidth="958.0" stylesheets="@Style1.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.nmh.marketapp.BanHang">
+  <columnConstraints>
+    <ColumnConstraints hgrow="SOMETIMES" maxWidth="455.4" minWidth="10.0" prefWidth="440.200048828125" />
+      <ColumnConstraints hgrow="SOMETIMES" maxWidth="364.19996337890626" minWidth="0.0" prefWidth="43.80000000000001" />
+    <ColumnConstraints hgrow="SOMETIMES" maxWidth="809.5999999999999" minWidth="10.0" prefWidth="487.79999999999995" />
+  </columnConstraints>
+  <rowConstraints>
+    <RowConstraints maxHeight="110.0" minHeight="10.0" prefHeight="110.0" vgrow="SOMETIMES" />
+    <RowConstraints maxHeight="44.39999275207519" minHeight="0.0" prefHeight="39.20001373291015" vgrow="SOMETIMES" />
+    <RowConstraints maxHeight="205.00001220703123" minHeight="10.0" prefHeight="205.00001220703123" vgrow="SOMETIMES" />
+      <RowConstraints maxHeight="272.6000183105469" minHeight="3.6000122070312557" prefHeight="156.39998779296877" vgrow="SOMETIMES" />
+  </rowConstraints>
+   <children>
+      <HBox prefHeight="100.0" prefWidth="200.0" GridPane.rowIndex="1">
+         <children>
+            <Label text="Tìm Kiếm sản phẩm:">
+               <HBox.margin>
+                  <Insets top="17.0" />
+               </HBox.margin></Label>
+            <TextField fx:id="txtSearch" prefHeight="26.0" prefWidth="266.0">
+               <HBox.margin>
+                  <Insets top="12.0" />
+               </HBox.margin>
+            </TextField>
+         </children>
+         <GridPane.margin>
+            <Insets left="10.0" />
+         </GridPane.margin>
+      </HBox>
+      <VBox prefHeight="172.0" prefWidth="35.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
+         <children>
+            <Button mnemonicParsing="false" onAction="#XoaSPKhoiHD" text="&lt;-" textFill="WHITE">
+               <VBox.margin>
+                  <Insets bottom="10.0" left="7.0" top="75.0" />
+               </VBox.margin></Button>
+            <Button mnemonicParsing="false" onAction="#themSPVaoHD" text="-&gt;" textFill="WHITE">
+               <VBox.margin>
+                  <Insets left="7.0" />
+               </VBox.margin></Button>
+         </children>
+      </VBox>
+      <VBox prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="2" GridPane.rowIndex="3">
+         <children>
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text=" Thanh toán : ">
+               <VBox.margin>
+                  <Insets bottom="5.0" top="10.0" />
+               </VBox.margin>
+            </Text>
+            <HBox prefHeight="39.0" prefWidth="809.0">
+               <children>
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Tổng tiền sản phẩm :">
+                     <HBox.margin>
+                        <Insets bottom="5.0" left="10.0" top="5.0" />
+                     </HBox.margin>
+                  </Text>
+                  <TextField fx:id="txtTong" prefHeight="26.0" prefWidth="344.0">
+                     <HBox.margin>
+                        <Insets bottom="5.0" left="10.0" top="5.0" />
+                     </HBox.margin>
+                  </TextField>
+               </children>
+            </HBox>
+            <HBox prefHeight="39.0" prefWidth="809.0">
+               <children>
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Tiền khách đưa :">
+                     <HBox.margin>
+                        <Insets bottom="5.0" left="10.0" top="5.0" />
+                     </HBox.margin>
+                  </Text>
+                  <TextField fx:id="txtTienKHDua" prefHeight="26.0" prefWidth="344.0">
+                     <HBox.margin>
+                        <Insets bottom="5.0" left="35.0" top="5.0" />
+                     </HBox.margin>
+                  </TextField>
+               </children>
+               <VBox.margin>
+                  <Insets />
+               </VBox.margin>
+            </HBox>
+            <HBox prefHeight="39.0" prefWidth="809.0">
+               <children>
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Tiền trả khách">
+                     <HBox.margin>
+                        <Insets bottom="5.0" left="10.0" top="5.0" />
+                     </HBox.margin>
+                  </Text>
+                  <TextField fx:id="txtTinhTienDu" prefHeight="26.0" prefWidth="344.0">
+                     <HBox.margin>
+                        <Insets bottom="5.0" left="47.0" top="5.0" />
+                     </HBox.margin>
+                  </TextField>
+               </children>
+            </HBox>
+            <Button fx:id="btnLuuHoaDon" mnemonicParsing="false" onAction="#LuuHoaDon" prefHeight="35.0" prefWidth="124.0" styleClass="IP" text="Tính tiền" textFill="WHITE">
+               <VBox.margin>
+                  <Insets left="350.0" />
+               </VBox.margin>
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Button>
+         </children>
+      </VBox>
+      <VBox prefHeight="174.0" prefWidth="352.0" GridPane.rowIndex="2">
+         <children>
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text=" Sản phẩm :">
+               <VBox.margin>
+                  <Insets left="10.0" />
+               </VBox.margin></Text>
+            <TableView fx:id="tbProc" prefHeight="184.0" prefWidth="446.0">
+               <VBox.margin>
+                  <Insets left="10.0" />
+               </VBox.margin>
+            </TableView>
+         </children>
+      </VBox>
+      <VBox prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="2" GridPane.rowIndex="2">
+         <children>
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Hóa đơn tạm tính : " />
+            <TableView fx:id="tbHoaDon" prefHeight="190.0" prefWidth="500.0">
+               <VBox.margin>
+                  <Insets left="5.0" right="5.0" />
+               </VBox.margin>
+            </TableView>
+         </children>
+      </VBox>
+      <Pane prefHeight="110.0" prefWidth="34.0" styleClass="Tieude" stylesheets="@Style1.css" GridPane.columnIndex="1" />
+      <Pane prefHeight="112.0" prefWidth="801.0" styleClass="Tieude" stylesheets="@Style1.css" GridPane.columnIndex="2">
+         <children>
+            <Text fill="WHITE" layoutX="135.0" layoutY="70.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="Subject" text="Bán hàng">
+               <font>
+                  <Font size="35.0" />
+               </font>
+            </Text>
+         </children></Pane>
+      <Pane onDragDetected="#handleButtonAction" prefHeight="200.0" prefWidth="200.0" styleClass="Tieude" stylesheets="@Style1.css">
+         <children>
+            <VBox layoutX="2.0" prefHeight="102.0" prefWidth="266.0" styleClass="vienkhung">
+               <children>
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Chi nhánh : " />
+                  <HBox prefHeight="34.0" prefWidth="138.0">
+                     <children>
+                        <Label fx:id="lbMaNV" text="NV">
+                           <HBox.margin>
+                              <Insets bottom="5.0" left="10.0" top="5.0" />
+                           </HBox.margin>
+                        </Label>
+                        <Label fx:id="lbTenNV" text="Tên NV">
+                           <HBox.margin>
+                              <Insets bottom="5.0" left="10.0" top="5.0" />
+                           </HBox.margin>
+                        </Label>
+                     </children>
+                  </HBox>
+                  <HBox prefHeight="34.0" prefWidth="138.0">
+                     <children>
+                        <Label fx:id="lbMaChiNhanh" text="MãCN">
+                           <HBox.margin>
+                              <Insets bottom="5.0" left="10.0" top="5.0" />
+                           </HBox.margin>
+                        </Label>
+                        <Label fx:id="lbTenChiNhanh" text="Địa Chỉ">
+                           <HBox.margin>
+                              <Insets bottom="5.0" left="10.0" top="5.0" />
+                           </HBox.margin>
+                        </Label>
+                     </children>
+                  </HBox>
+                  <Button alignment="TOP_LEFT" contentDisplay="TOP" mnemonicParsing="false" onAction="#handleButtonAction" prefHeight="26.0" prefWidth="90.0" styleClass="IP" text="Điểm danh" textFill="#fffafa">
+                     <VBox.margin>
+                        <Insets left="50.0" />
+                     </VBox.margin>
+                  </Button>
+               </children>
+            </VBox>
+         </children></Pane>
+      <VBox prefHeight="200.0" prefWidth="100.0" GridPane.rowIndex="3">
+         <children>
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Tiện ích : ">
+               <VBox.margin>
+                  <Insets left="5.0" top="20.0" />
+               </VBox.margin>
+            </Text>
+            <HBox prefHeight="61.0" prefWidth="444.0">
+               <children>
+                  <Button mnemonicParsing="false" prefHeight="35.0" prefWidth="206.0" text="Thêm khách hàng thành viên ">
+                     <HBox.margin>
+                        <Insets left="10.0" right="10.0" top="5.0" />
+                     </HBox.margin>
+                  </Button>
+                  <Button mnemonicParsing="false" onAction="#TraCuuKH" prefHeight="35.0" prefWidth="206.0" text="Tra Cứu Khách Hàng">
+                     <HBox.margin>
+                        <Insets left="10.0" right="10.0" top="5.0" />
+                     </HBox.margin>
+                  </Button>
+               </children>
+            </HBox>
+            <HBox prefHeight="100.0" prefWidth="200.0">
+               <children>
+                  <Button mnemonicParsing="false" prefHeight="35.0" prefWidth="206.0" text="Lịch sử">
+                     <HBox.margin>
+                        <Insets left="10.0" right="10.0" top="5.0" />
+                     </HBox.margin>
+                  </Button>
+                  <Button mnemonicParsing="false" prefHeight="35.0" prefWidth="206.0" text="Đăng xuất">
+                     <HBox.margin>
+                        <Insets left="10.0" right="10.0" top="5.0" />
+                     </HBox.margin>
+                  </Button>
+               </children>
+            </HBox>
+         </children>
+      </VBox>
+      <Text strokeType="OUTSIDE" strokeWidth="0.0" text=" Nhập mã khách hàng(nếu có):" GridPane.columnIndex="2" GridPane.rowIndex="1">
+         <GridPane.margin>
+            <Insets />
+         </GridPane.margin>
+      </Text>
+      <TextField fx:id="txtMaKH" prefHeight="26.0" prefWidth="344.0" GridPane.columnIndex="2" GridPane.rowIndex="1">
+         <GridPane.margin>
+            <Insets left="165.0" />
+         </GridPane.margin>
+      </TextField>
+   </children>
+</GridPane>

@@ -1,0 +1,41 @@
+/*
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/Other/CascadeStyleSheet.css to edit this template
+*/
+/* 
+    Created on : Mar 23, 2023, 10:57:56 AM
+    Author     : HP
+*/
+
+GridPane {
+/*    -fx-background-color: F8E6CB;*/
+    -fx-background-color:F0FFF0;
+    -fx-font-family: Time new roman;
+    -fx-pading: 20;
+    
+}
+Text.Subject {
+    -fx-font-size: 40px;
+    -fx-font-weight: bold;
+    -fx-text-fill: white; /* Màu chữ */
+    -fx-z-oder : 9999;
+}
+
+Pane.Tieude {  
+    -fx-background-color: yellowgreen;
+}
+Button {
+    -fx-background-color: yellowgreen;
+    -fx-font-weight: bold;
+}
+TextFeild.GCD{
+        -fx-background-color: white;
+}
+Button.IP {
+    -fx-background-color: darkgreen;
+    -fx-font-weight: bold;
+}
+Vbox.vienkhung{
+    -fx-border-color: black;
+    -fx-border-width: 10px;
+}
