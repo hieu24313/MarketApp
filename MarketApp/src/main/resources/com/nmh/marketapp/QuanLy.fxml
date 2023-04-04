@@ -62,7 +62,7 @@
       </Text>
       <HBox prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
          <children>
-            <Button fx:id="btnKhuyenMai" mnemonicParsing="false" onAction="#chuyenSangKhachHang" prefHeight="77.0" prefWidth="151.0" styleClass="vienkhung" text="Khuyến mãi ">
+            <Button fx:id="btnKhuyenMai" mnemonicParsing="false" onAction="#chuyenSangKhuyenMai" prefHeight="77.0" prefWidth="151.0" styleClass="vienkhung" text="Khuyến mãi ">
                <font>
                   <Font size="17.0" />
                </font>

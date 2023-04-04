@@ -23,6 +23,10 @@ public class GiamGia {
         this.tgKetThuc = tgKetThuc;
     }
 
+    public GiamGia() {
+    }
+    
+
     
     /**
      * @return the idGiamGia

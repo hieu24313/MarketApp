@@ -10,7 +10,6 @@ import com.nmh.utils.MessageBox;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.time.LocalDate;
-import java.time.ZoneId;
 import java.util.Date;
 import java.util.List;
 import java.util.function.UnaryOperator;
@@ -129,6 +128,41 @@ public class QuanLyKhachHang {
         TableColumn colTen = new TableColumn("Tên");
         TableColumn colNgaySinh = new TableColumn("Ngày Sinh");
         TableColumn colDT = new TableColumn("Số Điện Thoại");
+        TableColumn colDel = new TableColumn();
+        colDel.setCellFactory(r -> {
+            Button btn = new Button("Xóa Khách Hàng");
+            
+            btn.setOnAction(evt -> {
+                Alert a = MessageBox.getBox("Khách Hàng", 
+                        "Bạn muốn xóa khách này đúng không?", 
+                        Alert.AlertType.CONFIRMATION);
+                a.showAndWait().ifPresent(res -> {
+                    if (res == ButtonType.OK) {
+                        Button b = (Button)evt.getSource();
+                        TableCell cell = (TableCell) b.getParent();
+                        KhachHang q = (KhachHang) cell.getTableRow().getItem();
+                        try {
+                            if (kh.deleteKhachHang(q.getIdKH())) {
+                                MessageBox.getBox("Khách Hàng", "Xóa Thành Công!!!", Alert.AlertType.INFORMATION).show();
+                                this.loaddataKH(null);
+                                this.loadIdKH();
+                                this.resetGiaTri();
+                            } else
+                                MessageBox.getBox("Khách Hàng", "Xóa Thất Bại!!!", Alert.AlertType.WARNING).show();
+                                
+                         } catch (SQLException ex) {
+                              MessageBox.getBox("Khách Hàng", ex.getMessage(), Alert.AlertType.WARNING).show();
+                            Logger.getLogger(QuanLyKhachHang.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                        
+                    }
+                });
+            });
+            
+            TableCell c = new TableCell();
+            c.setGraphic(btn);
+            return c;
+        });
 
         colId.setCellValueFactory(new PropertyValueFactory("idKH"));
         colHo.setCellValueFactory(new PropertyValueFactory("hoKH"));
@@ -136,7 +170,7 @@ public class QuanLyKhachHang {
         colNgaySinh.setCellValueFactory(new PropertyValueFactory("ngaySinh"));
         colDT.setCellValueFactory(new PropertyValueFactory("soDT"));
 
-        this.tbKhachHang.getColumns().addAll(colId, colHo, colTen, colNgaySinh, colDT);
+        this.tbKhachHang.getColumns().addAll(colId, colHo, colTen, colNgaySinh, colDT, colDel);
 
     }
 
@@ -145,6 +179,7 @@ public class QuanLyKhachHang {
         this.tbKhachHang.getItems().clear();
         this.tbKhachHang.setItems(FXCollections.observableList(c.getKhachHang()));
     }
+    
 
     public void loaddataKH(String soDT) throws SQLException {
         KhachHangService c = new KhachHangService();
@@ -211,93 +246,4 @@ public class QuanLyKhachHang {
         this.txtSoDT.setText("");
         this.dpNgaySinh.setValue(LocalDate.now());
     }
-
-//    public void themNutXoa() {
-//        KhachHangService s = new KhachHangService();
-//
-//        TableColumn colDel = new TableColumn();
-//
-//        colDel.setCellFactory(r -> {
-//            Button btn = new Button("Xóa Khách Hàng");
-//
-//            btn.setOnAction(evt -> {
-//                Alert a = MessageBox.getBox("Khách Hàng",
-//                        "Bạn có chắc muốn xóa khách hàng này?",
-//                        Alert.AlertType.CONFIRMATION);
-//                a.showAndWait().ifPresent(res -> {
-//                    if (res == ButtonType.OK) {
-//                        Button b = (Button) evt.getSource();
-//                        TableCell cell = (TableCell) b.getParent();
-//                        KhachHang k = (KhachHang) cell.getTableRow().getItem();
-//                        try {
-//                            if (s.deleteKhachHang(k.getIdKH())) {
-//                                MessageBox.getBox("Khách Hàng", "Xóa Thành Công", Alert.AlertType.INFORMATION).show();
-//                                this.loaddataKH();
-//                            } else {
-//                                MessageBox.getBox("Khách Hàng", "Xóa Thất Bại!!!", Alert.AlertType.WARNING).show();
-//                            }
-//
-//                        } catch (SQLException ex) {
-//                            MessageBox.getBox("Khách Hàng", ex.getMessage(), Alert.AlertType.WARNING).show();
-//                            Logger.getLogger(QuanLyKhachHang.class.getName()).log(Level.SEVERE, null, ex);
-//                        }
-//
-//                    }
-//                });
-//            });
-//        }
-//    }
-
-//    public void test() {
-//        KhachHangService s = new KhachHangService();
-//
-//        TableColumn colId = new TableColumn("Mã Khách Hàng");
-//        TableColumn colHo = new TableColumn("Họ");
-//        TableColumn colTen = new TableColumn("Tên");
-//        TableColumn colNgaySinh = new TableColumn("Ngày Sinh");
-//        TableColumn colDT = new TableColumn("Số Điện Thoại");
-//        TableColumn colDel = new TableColumn();
-//
-//        colDel.setCellFactory(r -> {
-//        Button btnXoa = new Button("Xóa Khách Hàng");
-//        btnXoa.setOnAction(evt -> {
-//            
-//                    
-//        }});
-//            btn.setOnAction(evt -> {
-//                Alert a = MessageBox.getBox("Khách Hàng",
-//                        "Bạn có chắc muốn xóa khách hàng này?",
-//                        Alert.AlertType.CONFIRMATION);
-//                a.showAndWait().ifPresent(res -> {
-//                    if (res == ButtonType.OK) {
-//                        Button b = (Button) evt.getSource();
-//                        TableCell cell = (TableCell) b.getParent();
-//                        KhachHang k = (KhachHang) cell.getTableRow().getItem();
-//                        try {
-//                            if (s.deleteKhachHang(k.getIdKH())) {
-//                                MessageBox.getBox("Khách Hàng", "Xóa Thành Công", Alert.AlertType.INFORMATION).show();
-//                                this.loaddataKH();
-//                            } else {
-//                                MessageBox.getBox("Khách Hàng", "Xóa Thất Bại!!!", Alert.AlertType.WARNING).show();
-//                            }
-//
-//                        } catch (SQLException ex) {
-//                            MessageBox.getBox("Khách Hàng", ex.getMessage(), Alert.AlertType.WARNING).show();
-//                            Logger.getLogger(QuanLyKhachHang.class.getName()).log(Level.SEVERE, null, ex);
-//                        }
-//
-//                    }
-//                });
-//            });
-//        }
-//    }
-//            colId.setCellValueFactory(new PropertyValueFactory("idKH"));
-//            colHo.setCellValueFactory(new PropertyValueFactory("hoKH"));
-//            colTen.setCellValueFactory(new PropertyValueFactory("tenKH"));
-//            colNgaySinh.setCellValueFactory(new PropertyValueFactory("ngaySinh"));
-//            colDT.setCellValueFactory(new PropertyValueFactory("soDT"));
-//
-//            this.tbKhachHang.getColumns().addAll(colId, colHo, colTen, colNgaySinh, colDT);
-//
-//        }
 }
