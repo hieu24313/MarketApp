@@ -115,7 +115,7 @@ public class BanHang {
     }
 
     @FXML
-    public void handleButtonAction(ActionEvent event) throws SQLException {
+    public void DiemDanh(ActionEvent event) throws SQLException {
         Scene currentScene = ((Node) event.getSource()).getScene();
         Stage currentStage = (Stage) currentScene.getWindow();
         NhanVien nv = (NhanVien) currentStage.getUserData();

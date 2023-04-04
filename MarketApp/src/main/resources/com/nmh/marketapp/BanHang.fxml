@@ -149,7 +149,7 @@
                </font>
             </Text>
          </children></Pane>
-      <Pane onDragDetected="#handleButtonAction" prefHeight="200.0" prefWidth="200.0" styleClass="Tieude" stylesheets="@Style1.css">
+      <Pane onDragDetected="#DiemDanh" prefHeight="200.0" prefWidth="200.0" styleClass="Tieude" stylesheets="@Style1.css">
          <children>
             <VBox layoutX="2.0" prefHeight="102.0" prefWidth="266.0" styleClass="vienkhung">
                <children>
@@ -182,7 +182,7 @@
                         </Label>
                      </children>
                   </HBox>
-                  <Button alignment="TOP_LEFT" contentDisplay="TOP" mnemonicParsing="false" onAction="#handleButtonAction" prefHeight="26.0" prefWidth="90.0" styleClass="IP" text="Điểm danh" textFill="#fffafa">
+                  <Button alignment="TOP_LEFT" contentDisplay="TOP" mnemonicParsing="false" onAction="#DiemDanh" prefHeight="26.0" prefWidth="90.0" styleClass="IP" text="Điểm danh" textFill="#fffafa">
                      <VBox.margin>
                         <Insets left="50.0" />
                      </VBox.margin>

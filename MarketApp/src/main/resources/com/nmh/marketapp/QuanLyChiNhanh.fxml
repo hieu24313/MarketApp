@@ -26,7 +26,7 @@
       <RowConstraints maxHeight="140.60001220703123" minHeight="4.60003662109375" prefHeight="10.20001220703125" vgrow="SOMETIMES" />
    </rowConstraints>
    <children>
-      <TableView fx:id="tbKhachHang" prefHeight="220.0" prefWidth="297.0" GridPane.columnSpan="3" GridPane.rowIndex="1">
+      <TableView fx:id="tbChiNhanh" prefHeight="220.0" prefWidth="297.0" GridPane.columnSpan="3" GridPane.rowIndex="1">
          <GridPane.margin>
             <Insets left="10.0" right="10.0" top="10.0" />
          </GridPane.margin>
@@ -50,7 +50,7 @@
                               <Insets top="20.0" />
                            </HBox.margin>
                         </Text>
-                        <TextField prefHeight="26.0" prefWidth="292.0">
+                        <TextField fx:id="txtMaChiNhanh" prefHeight="26.0" prefWidth="292.0">
                            <HBox.margin>
                               <Insets left="10.0" top="20.0" />
                            </HBox.margin></TextField>
@@ -69,7 +69,7 @@
                               <Insets left="20.0" right="10.0" />
                            </HBox.margin>
                         </Text>
-                        <TextField prefHeight="26.0" prefWidth="292.0">
+                        <TextField fx:id="txtDiaChi" prefHeight="26.0" prefWidth="292.0">
                            <HBox.margin>
                               <Insets left="34.0" />
                            </HBox.margin>
@@ -95,7 +95,7 @@
                      <children>
                         <HBox prefHeight="47.0" prefWidth="358.0">
                            <children>
-                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Nhập mã hoặc địa chỉ chi nhánh :" wrappingWidth="194.64605712890625">
+                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Nhập địa chỉ chi nhánh :" wrappingWidth="194.64605712890625">
                                  <HBox.margin>
                                     <Insets left="10.0" top="20.0" />
                                  </HBox.margin>
@@ -117,12 +117,12 @@
                      <children>
                         <HBox prefHeight="85.0" prefWidth="358.0">
                            <children>
-                              <Button mnemonicParsing="false" prefHeight="26.0" prefWidth="140.0" styleClass="vienkhung" text="Thêm" textFill="WHITE">
+                              <Button mnemonicParsing="false" onAction="#addChiNhanh" prefHeight="26.0" prefWidth="140.0" styleClass="vienkhung" text="Thêm" textFill="WHITE">
                                  <HBox.margin>
                                     <Insets left="20.0" right="20.0" top="30.0" />
                                  </HBox.margin>
                               </Button>
-                              <Button mnemonicParsing="false" prefHeight="26.0" prefWidth="140.0" styleClass="vienkhung" text="Sửa" textFill="WHITE">
+                              <Button mnemonicParsing="false" onAction="#suaChiNhanh" prefHeight="26.0" prefWidth="140.0" styleClass="vienkhung" text="Sửa" textFill="WHITE">
                                  <HBox.margin>
                                     <Insets right="20.0" top="30.0" />
                                  </HBox.margin>
@@ -131,7 +131,7 @@
                         </HBox>
                         <HBox prefHeight="85.0" prefWidth="200.0">
                            <children>
-                              <Button mnemonicParsing="false" prefHeight="26.0" prefWidth="140.0" styleClass="vienkhung" text="Cập nhật" textFill="WHITE">
+                              <Button mnemonicParsing="false" onAction="#updateChiNhanh" prefHeight="26.0" prefWidth="140.0" styleClass="vienkhung" text="Cập nhật" textFill="WHITE">
                                  <HBox.margin>
                                     <Insets bottom="10.0" left="20.0" right="20.0" top="10.0" />
                                  </HBox.margin>

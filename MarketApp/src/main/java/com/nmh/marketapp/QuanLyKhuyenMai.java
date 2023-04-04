@@ -5,14 +5,11 @@
 package com.nmh.marketapp;
 
 import com.nmh.pojo.GiamGia;
-import com.nmh.pojo.KhachHang;
 import com.nmh.services.GiamGiaService;
 import com.nmh.utils.MessageBox;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -95,8 +92,8 @@ public class QuanLyKhuyenMai {
                             if (ggsv.deleteGiamGia(q.getIdGiamGia())) {
                                 MessageBox.getBox("Mã Khuyến Mãi", "Xóa Thành Công!!!", Alert.AlertType.INFORMATION).show();
                                 this.loaddataTable();
-//                                this.loadIdKH();
-//                                this.resetGiaTri();
+                                this.setIDchoTextField();
+                                this.resetGiaTri();
                             } else {
                                 MessageBox.getBox("Mã Khuyến Mãi", "Xóa Thất Bại!!!", Alert.AlertType.WARNING).show();
                             }
@@ -120,7 +117,7 @@ public class QuanLyKhuyenMai {
         colBatDau.setCellValueFactory(new PropertyValueFactory("tgBatDau"));
         colKetThuc.setCellValueFactory(new PropertyValueFactory("tgKetThuc"));
 
-        this.tbKhuyenMai.getColumns().addAll(colid, colGiaTri, colBatDau, colKetThuc);
+        this.tbKhuyenMai.getColumns().addAll(colid, colGiaTri, colBatDau, colKetThuc, colDel);
     }
 
     public void loaddataTable() throws SQLException {
