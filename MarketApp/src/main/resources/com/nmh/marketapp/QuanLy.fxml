@@ -52,7 +52,10 @@
          </children>
       </HBox>
       <Text strokeType="OUTSIDE" strokeWidth="0.0" text="PS: Hãy chọn đối tượng mà bạn muốn quản lý" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-      <Pane prefHeight="200.0" prefWidth="200.0" styleClass="Tieude" />
+      <Pane prefHeight="200.0" prefWidth="200.0" styleClass="Tieude">
+         <children>
+            <Button fx:id="btnDangXuat" layoutX="-19.0" layoutY="21.0" mnemonicParsing="false" onAction="#DangXuat" prefHeight="25.0" prefWidth="100.0" text="Đăng Xuất" />
+         </children></Pane>
       <Pane prefHeight="200.0" prefWidth="200.0" styleClass="Tieude" GridPane.columnIndex="1" />
       <Pane prefHeight="200.0" prefWidth="200.0" styleClass="Tieude" GridPane.columnIndex="2" />
       <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Quản lý" GridPane.columnSpan="3" GridPane.halignment="CENTER">

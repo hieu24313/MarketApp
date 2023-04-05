@@ -22,7 +22,7 @@ public class ChiNhanh {
 
     @Override
     public String toString() {
-        return this.diaChi;
+        return this.maChiNhanh+ ". " + this.diaChi;
     }
     
     

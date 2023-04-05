@@ -22,8 +22,9 @@ public class ChiNhanhService {
     public List<ChiNhanh> getChiNhanh(String dc) throws SQLException{
         List<ChiNhanh> c = new ArrayList<>();
         try (Connection conn = JdbcUtils.getConn()) {
-          String sql = "SELECT * FROM chinhanh where DiaChi LIKE " + dc;
+          String sql = "SELECT * FROM chinhanh where DiaChi LIKE CONCAT('%', ?, '%')";
           PreparedStatement stm = conn.prepareCall(sql);
+          stm.setString(1, dc);
           ResultSet rs = stm.executeQuery();
           while(rs.next()){
               int id = rs.getInt("MaChiNhanh");
@@ -89,13 +90,14 @@ public class ChiNhanhService {
         }
     }
     
-    public boolean updateGiamGia(ChiNhanh c) throws SQLException{
+    public boolean updateChiNhanh(ChiNhanh c) throws SQLException{
         try (Connection conn = JdbcUtils.getConn()) {
             conn.setAutoCommit(false);
-            String sql = "UPDATE chinhanh set MaChiNhanh=?, DiaChi=?";
+            String sql = "UPDATE chinhanh set DiaChi=? WHERE MaChiNhanh = ?";
             PreparedStatement stm = conn.prepareCall(sql);
-            stm.setInt(1, c.getMaChiNhanh());
-            stm.setString(2, c.getDiaChi());
+            
+            stm.setString(1, c.getDiaChi());
+            stm.setInt(2, c.getMaChiNhanh());
             stm.executeUpdate();
             try {
                 conn.commit();

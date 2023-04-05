@@ -47,15 +47,16 @@ DROP TABLE IF EXISTS `chitiethd`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `chitiethd` (
-  `MaChiTietHD` int DEFAULT NULL,
-  `MaHoaDon` int NOT NULL,
-  `MaSanPham` int NOT NULL,
+  `MaChiTietHD` int NOT NULL,
+  `MaHoaDon` int DEFAULT NULL,
+  `MaSanPham` int DEFAULT NULL,
   `SoLuong` float DEFAULT NULL,
   `ThanhTien` float DEFAULT NULL,
-  PRIMARY KEY (`MaHoaDon`,`MaSanPham`),
+  PRIMARY KEY (`MaChiTietHD`),
   KEY `chitiethd_ibfk_2` (`MaSanPham`),
-  CONSTRAINT `chitiethd_ibfk_1` FOREIGN KEY (`MaHoaDon`) REFERENCES `hoadon` (`MaHoaDon`) ON DELETE CASCADE,
-  CONSTRAINT `chitiethd_ibfk_2` FOREIGN KEY (`MaSanPham`) REFERENCES `sanpham` (`MaSanPham`) ON DELETE CASCADE
+  KEY `chitiethd_ibfk_1` (`MaHoaDon`),
+  CONSTRAINT `chitiethd_ibfk_1` FOREIGN KEY (`MaHoaDon`) REFERENCES `hoadon` (`MaHoaDon`) ON DELETE SET NULL,
+  CONSTRAINT `chitiethd_ibfk_2` FOREIGN KEY (`MaSanPham`) REFERENCES `sanpham` (`MaSanPham`) ON DELETE SET NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -65,7 +66,7 @@ CREATE TABLE `chitiethd` (
 
 LOCK TABLES `chitiethd` WRITE;
 /*!40000 ALTER TABLE `chitiethd` DISABLE KEYS */;
-INSERT INTO `chitiethd` VALUES (1,1,1,2,18000),(2,1,2,1,15000),(3,2,3,3,45000),(4,2,4,2,10000),(5,3,5,4,24000),(6,3,6,1,27000),(7,4,7,3,75000),(8,4,8,2,24000),(9,5,9,2,36000),(10,5,10,1,90000),(11,6,1,100,1000000),(11,6,2,1,15000),(13,7,1,1,10000),(14,8,1,1.05,10500),(15,9,1,1,10000),(15,9,2,1,15000),(17,10,1,1,10000),(17,10,2,1,15000),(19,11,1,0,0),(19,11,2,0,0),(21,12,1,1,10000),(21,12,2,1,15000),(23,13,6,1000,30000000),(23,13,10,1,100000),(25,14,1,1,10000),(25,14,2,1000,15000000),(27,15,1,10,100000),(27,15,2,1,15000),(29,16,1,1,10000),(29,16,2,10,150000),(31,17,1,1,10000),(31,17,2,10,150000),(33,18,1,1,10000),(33,18,2,1,15000),(33,18,3,1,20000),(36,19,1,1,10000),(36,19,2,1,15000),(38,20,1,1,10000),(38,20,2,1,15000),(40,21,1,1,10000),(40,21,2,1,15000),(42,22,1,1,10000),(42,22,2,1,15000),(44,23,1,10,100000),(44,23,2,1,15000),(44,23,3,1,20000),(47,24,1,1,10000),(47,24,2,1,15000),(47,24,3,1,20000),(50,25,1,1,10000),(50,25,2,1,15000),(50,25,3,1,20000),(53,26,1,1,10000),(53,26,2,1,15000),(55,27,1,1,10000),(55,27,2,1,15000),(57,28,1,1,10000),(57,28,2,1,15000),(57,28,3,1,20000),(57,28,4,1,5000),(57,28,5,1,8000),(57,28,6,1,30000),(57,28,7,1,25000),(57,28,8,1,12000),(57,28,9,1,18000),(57,28,10,1,100000),(67,29,1,1,10000),(67,29,2,1,15000),(69,30,1,1,10000),(69,30,2,1,15000),(71,31,1,1,10000),(71,31,2,1,15000),(73,32,1,1,10000),(73,32,2,1,15000),(75,33,1,1,10000),(75,33,2,1,15000),(75,33,3,1,20000),(78,34,1,1,10000),(78,34,2,1,15000),(78,34,3,1,20000),(81,35,1,1,10000),(81,35,2,1,15000),(81,35,3,1,20000),(84,36,1,1,10000),(84,36,2,1,15000),(84,36,3,1,20000),(87,37,1,1,10000),(87,37,2,1,15000),(87,37,3,1,20000),(90,38,1,1,10000),(90,38,2,100000000,1500000000000),(90,38,3,1,20000),(93,39,1,1,10000),(93,39,2,100000000,1500000000000),(93,39,3,1,20000),(96,40,1,1,10000),(96,40,2,100000000,1500000000000),(96,40,3,1,20000),(99,41,1,1,10000),(99,41,2,100000000,1500000000000),(99,41,3,1,20000);
+INSERT INTO `chitiethd` VALUES (1,1,1,2,18000),(2,1,2,1,15000),(3,2,3,3,45000),(4,2,4,2,10000),(5,3,5,4,24000),(6,3,6,1,27000),(7,4,7,3,75000),(8,4,8,2,24000),(9,5,9,2,36000),(10,5,10,1,90000);
 /*!40000 ALTER TABLE `chitiethd` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -114,9 +115,9 @@ CREATE TABLE `hoadon` (
   KEY `hoadon_ibfk_1` (`MaKH`),
   KEY `hoadon_ibfk_2` (`MaChiNhanh`),
   KEY `hoadon_ibfk_3` (`MaNhanVien`),
-  CONSTRAINT `hoadon_ibfk_1` FOREIGN KEY (`MaKH`) REFERENCES `khachhang` (`MaKH`) ON DELETE CASCADE,
-  CONSTRAINT `hoadon_ibfk_2` FOREIGN KEY (`MaChiNhanh`) REFERENCES `chinhanh` (`MaChiNhanh`) ON DELETE CASCADE,
-  CONSTRAINT `hoadon_ibfk_3` FOREIGN KEY (`MaNhanVien`) REFERENCES `nhanvien` (`MaNhanVien`) ON DELETE CASCADE
+  CONSTRAINT `hoadon_ibfk_1` FOREIGN KEY (`MaKH`) REFERENCES `khachhang` (`MaKH`) ON DELETE SET NULL,
+  CONSTRAINT `hoadon_ibfk_2` FOREIGN KEY (`MaChiNhanh`) REFERENCES `chinhanh` (`MaChiNhanh`) ON DELETE SET NULL,
+  CONSTRAINT `hoadon_ibfk_3` FOREIGN KEY (`MaNhanVien`) REFERENCES `nhanvien` (`MaNhanVien`) ON DELETE SET NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -169,13 +170,13 @@ CREATE TABLE `nhanvien` (
   `HoNV` varchar(255) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci DEFAULT NULL,
   `TenNV` varchar(255) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci DEFAULT NULL,
   `MaChiNhanh` int DEFAULT NULL,
-  `TaiKhoan` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `TaiKhoan` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `MatKhau` varchar(255) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci DEFAULT NULL,
   `LoaiNV` tinyint(1) DEFAULT NULL,
   PRIMARY KEY (`MaNhanVien`),
   UNIQUE KEY `TaiKhoan_UNIQUE` (`TaiKhoan`),
   KEY `MaChiNhanh` (`MaChiNhanh`),
-  CONSTRAINT `nhanvien_ibfk_1` FOREIGN KEY (`MaChiNhanh`) REFERENCES `chinhanh` (`MaChiNhanh`)
+  CONSTRAINT `nhanvien_ibfk_1` FOREIGN KEY (`MaChiNhanh`) REFERENCES `chinhanh` (`MaChiNhanh`) ON DELETE SET NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -205,7 +206,7 @@ CREATE TABLE `sanpham` (
   `MaGiamGia` int DEFAULT NULL,
   PRIMARY KEY (`MaSanPham`),
   KEY `sanpham_ibfk_1` (`MaGiamGia`),
-  CONSTRAINT `sanpham_ibfk_1` FOREIGN KEY (`MaGiamGia`) REFERENCES `giamgia` (`MaGiamGia`) ON DELETE CASCADE
+  CONSTRAINT `sanpham_ibfk_1` FOREIGN KEY (`MaGiamGia`) REFERENCES `giamgia` (`MaGiamGia`) ON DELETE SET NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -228,4 +229,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-04-04 17:08:12
+-- Dump completed on 2023-04-05 15:47:27

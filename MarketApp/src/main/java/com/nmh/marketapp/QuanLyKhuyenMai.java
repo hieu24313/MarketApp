@@ -63,8 +63,7 @@ public class QuanLyKhuyenMai {
             try {
                 this.loaddataTable(Integer.parseInt(this.txtSearch.getText()));
             } catch (SQLException ex) {
-
-                Logger.getLogger(QuanLyKhachHang.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(QuanLyKhuyenMai.class.getName()).log(Level.SEVERE, null, ex);
             }
         });
     }
@@ -100,7 +99,7 @@ public class QuanLyKhuyenMai {
 
                         } catch (SQLException ex) {
                             MessageBox.getBox("Mã Khuyến Mãi", ex.getMessage(), Alert.AlertType.WARNING).show();
-                            Logger.getLogger(QuanLyKhachHang.class.getName()).log(Level.SEVERE, null, ex);
+                            Logger.getLogger(QuanLyKhuyenMai.class.getName()).log(Level.SEVERE, null, ex);
                         }
 
                     }

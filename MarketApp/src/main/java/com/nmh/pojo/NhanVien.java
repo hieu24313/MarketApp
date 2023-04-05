@@ -15,7 +15,7 @@ public class NhanVien {
     private int idChiNhanh;
     private String taiKhoan;
     private String matKhau;
-    private boolean loaiNV;
+    private boolean loaiNV; // nếu true=1 là quản lý false = 0 là nhân viên
     
     
     public NhanVien(int maNhanVien, String hoNV, String tenNV, int idChiNhanh, String taiKhoan, String matKhau, boolean loaiNV) {

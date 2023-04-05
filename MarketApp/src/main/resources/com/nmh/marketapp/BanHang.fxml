@@ -218,7 +218,7 @@
                         <Insets left="10.0" right="10.0" top="5.0" />
                      </HBox.margin>
                   </Button>
-                  <Button mnemonicParsing="false" prefHeight="35.0" prefWidth="206.0" text="Đăng xuất">
+                  <Button fx:id="btnDangXuat" mnemonicParsing="false" onAction="#DangXuat" prefHeight="35.0" prefWidth="206.0" text="Đăng xuất">
                      <HBox.margin>
                         <Insets left="10.0" right="10.0" top="5.0" />
                      </HBox.margin>

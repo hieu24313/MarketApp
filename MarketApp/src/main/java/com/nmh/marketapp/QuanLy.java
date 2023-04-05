@@ -29,6 +29,8 @@ public class QuanLy {
     private Button btnChiNhanh;
     @FXML
     private Button btnKhuyenMai;
+    @FXML
+    private Button btnDangXuat;
 
 
     public void chuyenSangSanPham(ActionEvent evt) throws IOException {
@@ -91,6 +93,18 @@ public class QuanLy {
         formStage.setTitle("Quản Lý Chi Nhánh");
         formStage.show();
         Stage oldStage = (Stage) btnChiNhanh.getScene().getWindow();
+        oldStage.close();
+    }
+    
+    public void DangXuat(ActionEvent evt) throws IOException {
+        String nf = "DangNhap.fxml";
+        Parent form = FXMLLoader.load(getClass().getResource(nf));
+        Scene formScene = new Scene(form);
+        Stage formStage = new Stage();
+        formStage.setScene(formScene);
+        formStage.setTitle("Trang Đăng Nhập");
+        formStage.show();
+        Stage oldStage = (Stage) btnDangXuat.getScene().getWindow();
         oldStage.close();
     }
 

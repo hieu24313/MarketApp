@@ -5,7 +5,6 @@
 package com.nmh.services;
 
 import com.nmh.pojo.GiamGia;
-import com.nmh.pojo.KhachHang;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
@@ -42,7 +41,7 @@ public class GiamGiaService {
 
         List<GiamGia> giamGia = new ArrayList<>();
         try (Connection conn = JdbcUtils.getConn()) {
-            String sql = "SELECT * FROM giamgia where MaGiamGia LIKE ?";
+            String sql = "SELECT * FROM giamgia where MaGiamGia LIKE CONCAT('%', ?, '%')";
 
             PreparedStatement stm = conn.prepareCall(sql);
             stm.setInt(1, idkm);

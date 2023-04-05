@@ -55,15 +55,14 @@ public class QuanLyChiNhanh {
         this.setIDchoTextField();
         this.loadTableData();
         this.txtSearch.textProperty().addListener(e -> {
-
             
+//                String diaChi = this.txtSearch.getText();
             try {
-                String diaChi = this.txtSearch.getText();
-                this.loadTableData(diaChi);
+                this.loadTableData(this.txtSearch.getText());
             } catch (SQLException ex) {
-
                 Logger.getLogger(QuanLyChiNhanh.class.getName()).log(Level.SEVERE, null, ex);
             }
+            
         });
     }
 
@@ -79,6 +78,7 @@ public class QuanLyChiNhanh {
             if (kt) {
                 Alert a = MessageBox.getBox("Thêm Chi Nhánh", "Thêm Chi Nhánh Thành Công!!!", Alert.AlertType.CONFIRMATION);
                 a.show();
+                this.loadTableData();
                 this.resetGiaTri();
             } else {
                 Alert b = MessageBox.getBox("Thêm Chi Nhánh", "Thêm Chi Nhánh Thất Bại!!!", Alert.AlertType.CONFIRMATION);
@@ -160,7 +160,7 @@ public class QuanLyChiNhanh {
     
     public void loadTableData(String diaChi) throws SQLException {
         ChiNhanhService c = new ChiNhanhService();
-        this.tbChiNhanh.getColumns().clear();
+//        this.tbChiNhanh.getColumns().clear();
         this.tbChiNhanh.setItems(FXCollections.observableList(c.getChiNhanh(diaChi)));
     }
 
@@ -208,7 +208,7 @@ public class QuanLyChiNhanh {
         int idcn = Integer.parseInt(this.txtMaChiNhanh.getText());
         String diaChi = this.txtDiaChi.getText();
         ChiNhanh c = new ChiNhanh(diaChi, idcn);
-        boolean kt = cn.updateGiamGia(c);
+        boolean kt = cn.updateChiNhanh(c);
         if (kt) {
             Alert a = MessageBox.getBox("Cập nhật mã giảm giá", "Cập nhật mã giảm giá thành công!!!", Alert.AlertType.CONFIRMATION);
             this.loadTableData();

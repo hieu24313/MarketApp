@@ -71,6 +71,8 @@ public class BanHang {
     private Label lbTenChiNhanh;
     @FXML
     private TextField txtMaKH;
+    @FXML
+    private Button btnDangXuat;
 
     public void initialize() throws SQLException {
 
@@ -146,8 +148,8 @@ public class BanHang {
 
                 HoaDonService hds = new HoaDonService(); //Tạo hóa đơn service
                 ChiTietHoaDonService ct = new ChiTietHoaDonService(); //Tạo chi tiết hóa đơn service
-                int idhd = hds.getHoaDon().size() + 1; //lấy id hóa đơn cuối cùng +1
-                int idcthd = ct.getChiTietHoaDon().size() + 1; //lấy id chi tiết hóa đơn cuối +1
+                int idhd = hds.getHoaDon().get(hds.getHoaDon().size() - 1).getIdHoaDon() + 1; //lấy id hóa đơn cuối cùng +1
+                int idcthd = ct.getChiTietHoaDon().get(ct.getChiTietHoaDon().size() - 1).getIdChiTietHD() + 1; //lấy id chi tiết hóa đơn cuối +1
                 int idchinhanh = Integer.parseInt(this.lbMaChiNhanh.getText()); //lấy id chi nhánh
                 int idNV = Integer.parseInt(this.lbMaNV.getText());//lấy id nhân viên
                 int idKH = 1;
@@ -156,28 +158,29 @@ public class BanHang {
                 if (this.txtMaKH.getText().isEmpty()) {
                     idKH = 1;
                     double tong = Double.parseDouble(this.txtTong.getText()); //lấy tổng tiền
-                            double tienKHDua = Double.parseDouble(this.txtTienKHDua.getText()); //lấy tiền kh đưa được nhập vào
-                            java.time.LocalDate localDate = java.time.LocalDate.now();
-                            java.sql.Date NgayTao = java.sql.Date.valueOf(localDate);///tạo và ép kiểu ngày giờ tạo hóa đơn
+                    double tienKHDua = Double.parseDouble(this.txtTienKHDua.getText()); //lấy tiền kh đưa được nhập vào
+                    java.time.LocalDate localDate = java.time.LocalDate.now();
+                    java.sql.Date NgayTao = java.sql.Date.valueOf(localDate);///tạo và ép kiểu ngày giờ tạo hóa đơn
 
-                            HoaDon s = new HoaDon(idhd, idchinhanh, idNV, idKH, tong, tienKHDua, NgayTao); //tạo hóa đơn để lưu
+                    HoaDon s = new HoaDon(idhd, idchinhanh, idNV, idKH, tong, tienKHDua, NgayTao); //tạo hóa đơn để lưu
 
-                            for (SanPham c : allData) { // vòng for này để duyệt qua và lấy chi tiết của hóa đơn từ sản phẩm trong hóa đơn
-                                double thanhtien = c.getGiaSP() * c.getSoluong(); //thành tiền = số lượng * giá 1 sản phẩm
-                                cthd.add(new ChiTietHoaDon(idcthd, idhd, c.getIdSanPham(), c.getSoluong(), thanhtien));// thêm vào list chi tiết hóa đơn để lưu
-                            }
+                    for (SanPham c : allData) { // vòng for này để duyệt qua và lấy chi tiết của hóa đơn từ sản phẩm trong hóa đơn
+                        double thanhtien = c.getGiaSP() * c.getSoluong(); //thành tiền = số lượng * giá 1 sản phẩm
+                        cthd.add(new ChiTietHoaDon(idcthd, idhd, c.getIdSanPham(), c.getSoluong(), thanhtien));// thêm vào list chi tiết hóa đơn để lưu
+                        idcthd++;
+                    }
 
-                            boolean kt = hds.addHoaDon(s, cthd); //kiểm tra có add hóa đơn thành công không
-                            if (kt) {
-                                this.loadSP(null); // load lại sản phẩm
+                    boolean kt = hds.addHoaDon(s, cthd); //kiểm tra có add hóa đơn thành công không
+                    if (kt) {
+                        this.loadSP(null); // load lại sản phẩm
 //                    this.tbHoaDon.re
-                                Alert a = MessageBox.getBox("Thêm Hóa Đơn", "Thành Công!!!", Alert.AlertType.CONFIRMATION);
-                                a.show();
+                        Alert a = MessageBox.getBox("Thêm Hóa Đơn", "Thành Công!!!", Alert.AlertType.CONFIRMATION);
+                        a.show();
 
-                            } else {
-                                Alert a1 = MessageBox.getBox("Thêm Hóa Đơn", "Thất Bại!!!", Alert.AlertType.CONFIRMATION);
-                                a1.show();
-                            }
+                    } else {
+                        Alert a1 = MessageBox.getBox("Thêm Hóa Đơn", "Thất Bại!!!", Alert.AlertType.CONFIRMATION);
+                        a1.show();
+                    }
                 } else {
                     int kiemtraidKH = Integer.parseInt(this.txtMaKH.getText()); // lấy mã KH
                     for (KhachHang k : listkh) {
@@ -218,8 +221,7 @@ public class BanHang {
                 }
 
             }
-        } 
-        else {
+        } else {
             Alert a2 = MessageBox.getBox("Cảnh báo", "Vui lòng nhập số tiền khách đưa", Alert.AlertType.CONFIRMATION);
             a2.show();
         }
@@ -324,6 +326,18 @@ public class BanHang {
         formStage.setScene(formScene);
         formStage.setTitle("Tra Cứu Khách Hàng");
         formStage.show();
+    }
+
+    public void DangXuat(ActionEvent evt) throws IOException {
+        String nf = "DangNhap.fxml";
+        Parent form = FXMLLoader.load(getClass().getResource(nf));
+        Scene formScene = new Scene(form);
+        Stage formStage = new Stage();
+        formStage.setScene(formScene);
+        formStage.setTitle("Trang Đăng Nhập");
+        formStage.show();
+        Stage oldStage = (Stage) btnDangXuat.getScene().getWindow();
+        oldStage.close();
     }
 
 }
