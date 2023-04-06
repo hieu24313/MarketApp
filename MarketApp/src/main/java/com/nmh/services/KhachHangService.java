@@ -5,6 +5,7 @@
 package com.nmh.services;
 
 import com.nmh.pojo.KhachHang;
+import com.nmh.pojo.SanPham;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
@@ -95,13 +96,13 @@ public class KhachHangService {
             }
         }
     }
-    
-    public boolean updateKhachHang(KhachHang a) throws SQLException{
+
+    public boolean updateKhachHang(KhachHang a) throws SQLException {
         try (Connection conn = JdbcUtils.getConn()) {
             conn.setAutoCommit(false);
 //             sql = "INSERT INTO khachhang(MaKH, HoKH, TenKH, NgaySinh, SoDT) VALUES (?, ?, ?, ?, ?)";
 //            sql = "UPDATE khachhang set HoKH='" + a.getHoKH() + "', TenKH='" + a.getTenKH() + "', NgaySinh='"+a.getNgaySinh()+"',SoDT='"+a.getSoDT()+"' WHERE MaKH="+a.getIdKH();
-            
+
             String sql = "UPDATE khachhang set HoKH=?, TenKH=?, NgaySinh=?, SoDT=? WHERE MaKH=? ";
             PreparedStatement stm = conn.prepareCall(sql);
             stm.setString(1, a.getHoKH());
@@ -120,14 +121,15 @@ public class KhachHangService {
             }
         }
     }
-    
-    public boolean deleteKhachHang(int idKH) throws SQLException{
+
+    public boolean deleteKhachHang(int idKH) throws SQLException {
         try (Connection conn = JdbcUtils.getConn()) {
             String sql = "DELETE FROM khachhang WHERE MaKH=?";
             PreparedStatement stm = conn.prepareCall(sql);
             stm.setInt(1, idKH);
-            
+
             return stm.executeUpdate() > 0;
+        }
     }
-    }
+
 }

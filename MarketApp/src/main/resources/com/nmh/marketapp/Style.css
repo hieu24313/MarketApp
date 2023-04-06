@@ -36,3 +36,6 @@ Button.vienkhung{
     -fx-border-width: 2;
 }
 
+button.dangxuat{
+    -fx-background-color: darkgreen; 
+}

@@ -4,13 +4,36 @@
  */
 package com.nmh.marketapp;
 
+import com.nmh.pojo.GiamGia;
+import com.nmh.pojo.NhanVien;
+import com.nmh.pojo.SanPham;
+import com.nmh.services.GiamGiaService;
+import com.nmh.services.NhanVienService;
+import com.nmh.services.SanPhamService;
+import com.nmh.utils.MessageBox;
 import java.io.IOException;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.function.UnaryOperator;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.TableCell;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
+import javafx.scene.control.TextFormatter;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 
 /**
@@ -21,6 +44,58 @@ public class QuanLySanPham {
 
     @FXML
     private Button btnThoat;
+    @FXML
+    private TableView tbSanPham;
+    @FXML
+    private TextField txtMaSanPham;
+    @FXML
+    private TextField txtTenSanPham;
+    @FXML
+    private TextField txtGiaSP;
+    @FXML
+    private TextField txtDonVi;
+    @FXML
+    private TextField txtXuatXu;
+    @FXML
+    private ComboBox cbMaGiamGia;
+    @FXML
+    private TextField txtSearch;
+
+    public void initialize() throws SQLException {
+        this.txtMaSanPham.setDisable(true);
+        this.cbMaGiamGia.setItems(FXCollections.observableList(this.loadMaGiamGia()));
+        this.loadTableColumn();
+        this.loadDaTaSanPham();
+        this.ganIdChoTextField();
+        this.txtSearch.textProperty().addListener(e -> {
+
+            this.tbSanPham.getItems().clear();
+            try {
+                this.loadDaTaSanPham(this.txtSearch.getText());
+            } catch (SQLException ex) {
+
+                Logger.getLogger(QuanLySanPham.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        });
+
+        UnaryOperator<TextFormatter.Change> filter = change -> {
+            String text = change.getText();
+            if (text.matches("[0-9]*")) { // Chỉ cho phép nhập số
+                return change;
+            } else {
+                Alert a = MessageBox.getBox("Cảnh báo", "Vui lòng nhập số!!", Alert.AlertType.WARNING);
+                a.show();
+            }
+            return null;
+        };
+        TextFormatter<String> formatter = new TextFormatter<>(filter);
+        this.txtGiaSP.setTextFormatter(formatter);
+    }
+
+    public List<GiamGia> loadMaGiamGia() throws SQLException {
+        GiamGiaService gg = new GiamGiaService();
+        return gg.getGiamGia();
+    }
 
     public void thoatQuanLy(ActionEvent e) throws IOException {
         String nf = "QuanLy.fxml";
@@ -33,5 +108,117 @@ public class QuanLySanPham {
         Stage oldStage = (Stage) btnThoat.getScene().getWindow();
         oldStage.close();
     }
-    
+
+    public void loadTableColumn() {
+        TableColumn colId = new TableColumn("Mã Sản Phẩm");
+        TableColumn colTen = new TableColumn("Tên Sản Phẩm");
+        TableColumn colGia = new TableColumn("Giá Sản Phẩm");
+        TableColumn colDonVi = new TableColumn("Đơn Vị");
+        TableColumn colXuatXu = new TableColumn("Xuất Xứ");
+        TableColumn colGiamGia = new TableColumn("Mã Giảm Giá");
+        TableColumn colDel = new TableColumn();
+        colDel.setCellFactory(r -> {
+            Button btn = new Button("Xóa Sản Phẩm");
+
+            btn.setOnAction(evt -> {
+                Alert a = MessageBox.getBox("Sản Phẩm",
+                        "Bạn muốn xóa Sản Phẩm này đúng không?",
+                        Alert.AlertType.CONFIRMATION);
+                a.showAndWait().ifPresent(res -> {
+                    if (res == ButtonType.OK) {
+                        Button b = (Button) evt.getSource();
+                        TableCell cell = (TableCell) b.getParent();
+                        SanPhamService sp = new SanPhamService();
+                        SanPham q = (SanPham) cell.getTableRow().getItem();
+                        try {
+                            if (sp.deleteSanPham(q.getIdSanPham())) {
+                                MessageBox.getBox("Sản Phẩm", "Xóa Thành Công!!!", Alert.AlertType.INFORMATION).show();
+                                this.loadDaTaSanPham();
+                                this.ganIdChoTextField();
+                            } else {
+                                MessageBox.getBox("Sản Phẩm", "Xóa Thất Bại!!!", Alert.AlertType.WARNING).show();
+                            }
+
+                        } catch (SQLException ex) {
+                            MessageBox.getBox("Sản Phẩm", ex.getMessage(), Alert.AlertType.WARNING).show();
+                            Logger.getLogger(QuanLySanPham.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+
+                    }
+                });
+            });
+
+            TableCell c = new TableCell();
+            c.setGraphic(btn);
+            return c;
+        });
+
+        colId.setCellValueFactory(new PropertyValueFactory("idSanPham"));
+        colTen.setCellValueFactory(new PropertyValueFactory("tenSP"));
+        colGia.setCellValueFactory(new PropertyValueFactory("giaSP"));
+        colDonVi.setCellValueFactory(new PropertyValueFactory("donVi"));
+        colXuatXu.setCellValueFactory(new PropertyValueFactory("xuatXu"));
+        colGiamGia.setCellValueFactory(new PropertyValueFactory("idGiamGia"));
+
+        this.tbSanPham.getColumns().addAll(colId, colTen, colGia, colDonVi, colXuatXu, colGiamGia, colDel);
+    }
+
+    public void loadDaTaSanPham() throws SQLException {
+        SanPhamService sp = new SanPhamService();
+        List<SanPham> s = sp.getSanPham();
+
+//        this.tbSanPham.getColumns().clear();
+        this.tbSanPham.setItems(FXCollections.observableList(s));
+    }
+
+    public void loadDaTaSanPham(String ten) throws SQLException {
+        SanPhamService sp = new SanPhamService();
+        List<SanPham> s = sp.getSanPham(ten);
+
+        this.tbSanPham.setItems(FXCollections.observableList(s));
+    }
+
+    public void ganIdChoTextField() throws SQLException {
+        SanPhamService sp = new SanPhamService();
+        List<SanPham> s = sp.getSanPham();
+        this.txtMaSanPham.setText(s.get(s.size() - 1).getIdSanPham() + 1 + "");
+    }
+
+    public void themSanPham(ActionEvent evt) throws SQLException {
+        if (!this.txtTenSanPham.getText().isEmpty() && !this.txtGiaSP.getText().isEmpty() && !this.txtDonVi.getText().isEmpty() && !this.txtXuatXu.getText().isEmpty() && this.cbMaGiamGia.getValue() != null) {
+            int idSP = Integer.parseInt(this.txtMaSanPham.getText());
+            String tenSP = this.txtTenSanPham.getText();
+            Double Gia = Double.valueOf(this.txtGiaSP.getText());
+            String DonVi = this.txtDonVi.getText();
+            String XuatXu = this.txtXuatXu.getText();
+            GiamGia g = (GiamGia) this.cbMaGiamGia.getValue();
+            int idGiamGia = g.getIdGiamGia();
+
+            SanPhamService sp = new SanPhamService();
+            SanPham s = new SanPham(idSP, tenSP, Gia, DonVi, XuatXu, idGiamGia);
+            boolean kt = sp.addSanPham(s);
+            if (kt) {
+                Alert a = MessageBox.getBox("Thêm Sản Phẩm", "Thêm Sản Phẩm Thành Công!!!", Alert.AlertType.CONFIRMATION);
+                a.show();
+                this.loadDaTaSanPham();
+                this.resetGiaTri();
+                this.ganIdChoTextField();
+            } else {
+                Alert a = MessageBox.getBox("Thêm Sản Phẩm", "Thêm Sản Phẩm Thất Bại!!!", Alert.AlertType.CONFIRMATION);
+                a.show();
+            }
+        } else {
+            Alert a = MessageBox.getBox("Thêm Sản Phẩm", "Vui lòng nhập đầy đủ thông tin!!!", Alert.AlertType.CONFIRMATION);
+            a.show();
+        }
+
+    }
+
+    public void resetGiaTri() {
+        this.txtDonVi.setText("");
+        this.txtTenSanPham.setText("");
+        this.txtGiaSP.setText("");
+        this.txtXuatXu.setText("");
+        this.cbMaGiamGia.setValue(null);
+    }
 }

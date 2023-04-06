@@ -25,8 +25,14 @@ public class GiamGia {
 
     public GiamGia() {
     }
+
+    @Override
+    public String toString() {
+        return this.idGiamGia + ". Giá Trị Giảm: " + (this.GiaTri*100)+"%";
+    }
     
 
+    
     
     /**
      * @return the idGiamGia
