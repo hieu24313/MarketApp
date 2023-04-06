@@ -15,16 +15,18 @@ public class SanPham {
     private String donVi;
     private String xuatXu;
     private int idGiamGia;
+    private int idChiNhanh;
     private double soluong = 1.0;
 
 
 
-    public SanPham(int idSanPham, String tenSP, double giaSP, String donVi, String xuatXu, int idGiamGia) {
+    public SanPham(int idSanPham, String tenSP, double giaSP, String donVi, String xuatXu, int idChiNhanh ,int idGiamGia) {
         this.idSanPham = idSanPham;
         this.tenSP = tenSP;
         this.giaSP = giaSP;
         this.donVi = donVi;
         this.xuatXu = xuatXu;
+        this.idChiNhanh = idChiNhanh;
         this.idGiamGia = idGiamGia;
     }
     
@@ -135,6 +137,20 @@ public class SanPham {
      */
     public void setSoluong(double soluong) {
         this.soluong = soluong;
+    }
+
+    /**
+     * @return the idChiNhanh
+     */
+    public int getIdChiNhanh() {
+        return idChiNhanh;
+    }
+
+    /**
+     * @param idChiNhanh the idChiNhanh to set
+     */
+    public void setIdChiNhanh(int idChiNhanh) {
+        this.idChiNhanh = idChiNhanh;
     }
 
     
