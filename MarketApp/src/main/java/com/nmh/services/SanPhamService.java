@@ -84,12 +84,57 @@ public class SanPhamService {
         }
     }
 
+    public List<SanPham> getSanPham(String ten, int idchinhanh) throws SQLException {
+        List<SanPham> proc = new ArrayList<>();
+        try (Connection conn = JdbcUtils.getConn()) {
+            String sql = "SELECT * FROM sanpham where TenSanPham LIKE CONCAT('%', ?, '%') AND MaChiNhanh = ?";
+            PreparedStatement stm = conn.prepareCall(sql);
+            stm.setString(1, ten);
+            stm.setInt(2, idchinhanh);
+            ResultSet rs = stm.executeQuery();
+            while (rs.next()) {
+                int MaSP = rs.getInt("MaSanPham");
+                String TenSP = rs.getString("TenSanPham");
+                Double GiaSP = rs.getDouble("Gia");
+                String DonVi = rs.getString("DonVi");
+                String XuatXU = rs.getString("XuatXu");
+                int MaChiNhanh = rs.getInt("MaChiNhanh");
+                int idGiamGia = rs.getInt("MaGiamGia");
+                proc.add(new SanPham(MaSP, TenSP, GiaSP, DonVi, XuatXU, MaChiNhanh, idGiamGia));
+            }
+
+        }
+        return proc;
+    }
+    
     public List<SanPham> getSanPham(String ten) throws SQLException {
         List<SanPham> proc = new ArrayList<>();
         try (Connection conn = JdbcUtils.getConn()) {
             String sql = "SELECT * FROM sanpham where TenSanPham LIKE CONCAT('%', ?, '%')";
             PreparedStatement stm = conn.prepareCall(sql);
             stm.setString(1, ten);
+            ResultSet rs = stm.executeQuery();
+            while (rs.next()) {
+                int MaSP = rs.getInt("MaSanPham");
+                String TenSP = rs.getString("TenSanPham");
+                Double GiaSP = rs.getDouble("Gia");
+                String DonVi = rs.getString("DonVi");
+                String XuatXU = rs.getString("XuatXu");
+                int MaChiNhanh = rs.getInt("MaChiNhanh");
+                int idGiamGia = rs.getInt("MaGiamGia");
+                proc.add(new SanPham(MaSP, TenSP, GiaSP, DonVi, XuatXU, MaChiNhanh, idGiamGia));
+            }
+
+        }
+        return proc;
+    }
+    
+    public List<SanPham> getSanPham(int idchinhanh) throws SQLException {
+        List<SanPham> proc = new ArrayList<>();
+        try (Connection conn = JdbcUtils.getConn()) {
+            String sql = "SELECT * FROM sanpham where MaChiNhanh = ?";
+            PreparedStatement stm = conn.prepareCall(sql);
+            stm.setInt(1, idchinhanh);
             ResultSet rs = stm.executeQuery();
             while (rs.next()) {
                 int MaSP = rs.getInt("MaSanPham");

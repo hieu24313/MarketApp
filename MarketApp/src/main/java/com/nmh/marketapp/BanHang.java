@@ -2,12 +2,14 @@ package com.nmh.marketapp;
 
 import com.nmh.pojo.ChiNhanh;
 import com.nmh.pojo.ChiTietHoaDon;
+import com.nmh.pojo.GiamGia;
 import com.nmh.pojo.HoaDon;
 import com.nmh.pojo.KhachHang;
 import com.nmh.pojo.NhanVien;
 import com.nmh.pojo.SanPham;
 import com.nmh.services.ChiNhanhService;
 import com.nmh.services.ChiTietHoaDonService;
+import com.nmh.services.GiamGiaService;
 import com.nmh.services.HoaDonService;
 import com.nmh.services.KhachHangService;
 import com.nmh.services.SanPhamService;
@@ -29,6 +31,8 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import com.nmh.utils.MessageBox;
+import java.sql.Date;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.function.UnaryOperator;
 import javafx.collections.ObservableList;
@@ -79,7 +83,6 @@ public class BanHang {
         this.txtTinhTienDu.setDisable(true);
         this.txtTong.setDisable(true);
         this.loadTableColumnProc();
-        this.loadSP(null);
         this.loadTableColumnHD();
         this.tbHoaDon.setEditable(true);
         this.btnLuuHoaDon.setDisable(true);
@@ -105,10 +108,12 @@ public class BanHang {
         TextFormatter<String> formatter1 = new TextFormatter<>(filter);
         this.txtTienKHDua.setTextFormatter(formatter);
         this.txtMaKH.setTextFormatter(formatter1);
+        this.txtSearch.setDisable(true);
         this.txtSearch.textProperty().addListener(e -> {
             try {
+                int idchinhanh = Integer.parseInt(this.lbMaChiNhanh.getText());
                 this.tbProc.getItems().clear();
-                this.loadSP(this.txtSearch.getText());
+                this.loadSP(this.txtSearch.getText(), idchinhanh);
 
             } catch (SQLException ex) {
                 Logger.getLogger(DangNhap.class.getName()).log(Level.SEVERE, null, ex);
@@ -126,10 +131,14 @@ public class BanHang {
         for (ChiNhanh ch1 : ch) {
             this.lbTenChiNhanh.setText(ch1.getDiaChi());
         }
+
         this.btnLuuHoaDon.setDisable(false);
         this.lbMaNV.setText(nv.getMaNhanVien() + "");
         this.lbMaChiNhanh.setText(nv.getIdChiNhanh() + "");
         this.lbTenNV.setText(nv.getHoNV() + " " + nv.getTenNV());
+        this.loadSP();
+        this.txtSearch.setDisable(false);
+
         Alert a = MessageBox.getBox("Điểm Danh Thành Công!!", "Chào, " + nv.getHoNV() + " " + nv.getTenNV(), Alert.AlertType.CONFIRMATION);
         a.show();
     }
@@ -236,15 +245,17 @@ public class BanHang {
         TableColumn colDon = new TableColumn("Đơn Vị");
         TableColumn colXuatXu = new TableColumn("Xuất Xứ");
         TableColumn colGiamGia = new TableColumn("Mã Giảm Giá");
+        TableColumn colChiNhanh = new TableColumn("Mã Chi Nhánh");
 
         colId.setCellValueFactory(new PropertyValueFactory("idSanPham"));
         colTen.setCellValueFactory(new PropertyValueFactory("tenSP"));
         colGia.setCellValueFactory(new PropertyValueFactory("giaSP"));
         colXuatXu.setCellValueFactory(new PropertyValueFactory("xuatXu"));
         colDon.setCellValueFactory(new PropertyValueFactory("donVi"));
+        colChiNhanh.setCellValueFactory(new PropertyValueFactory("idChiNhanh"));
         colGiamGia.setCellValueFactory(new PropertyValueFactory("idGiamGia"));
 
-        this.tbProc.getColumns().addAll(colId, colTen, colDon, colGia, colXuatXu, colGiamGia);
+        this.tbProc.getColumns().addAll(colId, colTen, colDon, colGia, colXuatXu, colChiNhanh, colGiamGia);
     }
 
     public void loadTableColumnHD() throws SQLException {
@@ -253,6 +264,7 @@ public class BanHang {
         TableColumn colTen1 = new TableColumn("Tên Sản Phẩm");
         TableColumn colGia1 = new TableColumn("Giá(VNĐ)");
         TableColumn colDon1 = new TableColumn("Đơn Vị");
+        TableColumn colChiNhanh1 = new TableColumn("Mã Chi Nhánh");
         TableColumn colXuatXu1 = new TableColumn("Xuất Xứ");
         TableColumn colGiamGia1 = new TableColumn("Mã Giảm Giá");
 
@@ -261,6 +273,7 @@ public class BanHang {
         colGia1.setCellValueFactory(new PropertyValueFactory("giaSP"));
         colXuatXu1.setCellValueFactory(new PropertyValueFactory("xuatXu"));
         colDon1.setCellValueFactory(new PropertyValueFactory("donVi"));
+        colChiNhanh1.setCellValueFactory(new PropertyValueFactory("idChiNhanh"));
         colGiamGia1.setCellValueFactory(new PropertyValueFactory("idGiamGia"));
 
         TableColumn<SanPham, Double> colSoluong = new TableColumn<>("Số Lượng");
@@ -273,10 +286,19 @@ public class BanHang {
             this.txtTong.setText(tinhTong() + " ");
         });
 
-        this.tbHoaDon.getColumns().addAll(colSoluong, colId1, colTen1, colDon1, colGia1, colXuatXu1, colGiamGia1);
+        this.tbHoaDon.getColumns().addAll(colSoluong, colId1, colTen1, colDon1, colGia1, colXuatXu1, colChiNhanh1, colGiamGia1);
     }
 
-    private void loadSP(String kw) throws SQLException {
+    public void loadSP() throws SQLException {
+        int idchinhanh = Integer.parseInt(this.lbMaChiNhanh.getText());
+        List<SanPham> proc = p.getSanPham(idchinhanh);
+
+        this.tbProc.getItems().clear();
+        this.tbProc.setItems(FXCollections.observableList(proc));
+
+    }
+
+    public void loadSP(String kw) throws SQLException {
         List<SanPham> proc = p.getSanPham(kw);
 
         this.tbProc.getItems().clear();
@@ -284,10 +306,33 @@ public class BanHang {
 
     }
 
-    public void themSPVaoHD(ActionEvent evt) {
+    public void loadSP(String kw, int idchinhanh) throws SQLException {
+        List<SanPham> proc = p.getSanPham(kw, idchinhanh);
+
+        this.tbProc.getItems().clear();
+        this.tbProc.setItems(FXCollections.observableList(proc));
+
+    }
+
+    public void themSPVaoHD(ActionEvent evt) throws SQLException {
         SanPham selectedObject = (SanPham) tbProc.getSelectionModel().getSelectedItem();
 
         if (selectedObject != null) {
+            GiamGiaService loadKM = new GiamGiaService();
+            List<GiamGia> s = loadKM.getGiamGia();
+            SanPham kt = (SanPham) selectedObject;
+            if (kt.getIdGiamGia() != 0) {
+                Date date = Date.valueOf(LocalDate.now());
+                for (GiamGia g : s) {
+
+                    if (date.compareTo(g.getTgBatDau()) > 0 && date.compareTo(g.getTgKetThuc()) < 0) {
+                        if (g.getIdGiamGia() == kt.getIdGiamGia()) {
+                            Double newGia = kt.getGiaSP() - kt.getGiaSP() * g.getGiaTri();
+                            kt.setGiaSP(newGia);
+                        }
+                    }
+                }
+            }
             tbHoaDon.getItems().add(selectedObject);
             tbProc.getItems().remove(selectedObject);
             this.txtTong.setText(tinhTong() + "");
