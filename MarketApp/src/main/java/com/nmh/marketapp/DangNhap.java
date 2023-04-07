@@ -37,9 +37,11 @@ public class DangNhap {
         String tk = this.txtTaiKhoan.getText();
         String pw = this.txtMatKhau.getText();
         List<NhanVien> c = n.getNhanVien();
+        int kiemtra = 0;
         if (!tk.isEmpty() && !pw.isEmpty()) {
             for (NhanVien nv : c) {
                 if (nv.getTaiKhoan().equals(tk) && nv.getMatKhau().equals(pw)) {
+                    kiemtra++;
                     //gọi form, kiểm tra role nếu là quản lý
                     if (nv.isLoaiNV() == true) {
                         String nf = "QuanLy.fxml";
@@ -70,15 +72,14 @@ public class DangNhap {
                         Stage oldStage = (Stage) btnDangNhap.getScene().getWindow();
                         oldStage.close();
                         break;
-                    } else {
-                        Alert a = MessageBox.getBox("Thông Báo", "Sai Tài Khoản Hoặc Mật Khẩu", Alert.AlertType.CONFIRMATION);
-                        a.show();
                     }
-
                 }
             }
-        }
-        else{
+            if (kiemtra == 0) {
+                Alert a = MessageBox.getBox("Thông Báo", "Sai Tài Khoản Hoặc Mật Khẩu", Alert.AlertType.CONFIRMATION);
+                a.show();
+            }
+        } else {
             Alert b = MessageBox.getBox("Cảnh Báo", "Vui lòng nhâp tài khoản và mật khẩu!!", Alert.AlertType.CONFIRMATION);
             b.show();
         }
