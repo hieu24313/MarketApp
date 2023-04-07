@@ -5,9 +5,7 @@
 package com.nmh.services;
 
 import com.nmh.pojo.ChiTietHoaDon;
-import com.nmh.pojo.HoaDon;
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -19,11 +17,7 @@ import java.util.List;
  * @author HP
  */
 public class ChiTietHoaDonService {
-//    private int idChiTietHD;
-//    private int idHoaDon;
-//    private int idSanPham;
-//    private double soLuong;
-//    private double thanhTien;
+
     
     public List<ChiTietHoaDon> getChiTietHoaDon() throws SQLException {
         List<ChiTietHoaDon> cthd = new ArrayList<>();
