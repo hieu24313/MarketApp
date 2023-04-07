@@ -5,7 +5,6 @@
 package com.nmh.marketapp;
 
 import com.nmh.pojo.ChiNhanh;
-import com.nmh.pojo.KhachHang;
 import com.nmh.pojo.NhanVien;
 import com.nmh.services.ChiNhanhService;
 import com.nmh.services.NhanVienService;

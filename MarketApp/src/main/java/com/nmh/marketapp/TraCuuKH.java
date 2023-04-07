@@ -7,7 +7,6 @@ package com.nmh.marketapp;
 import com.nmh.pojo.KhachHang;
 import com.nmh.services.KhachHangService;
 import java.sql.SQLException;
-import java.time.LocalDate;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -15,7 +14,6 @@ import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
-import javafx.scene.control.DatePicker;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -34,15 +32,13 @@ public class TraCuuKH {
     private TextField txtTimsdt;
     @FXML
     private TableView tbKhachHang;
-    @FXML private Button btnThoat;
-    
+    @FXML
+    private Button btnThoat;
+
     KhachHangService c = new KhachHangService();
 
     public void initialize() throws SQLException {
         this.loadtbKH();
-//        String ten = this.txtTimTen.getText();
-//        String sdt = this.txtTimsdt.getText();
-//        DatePicker date = this.dpTimNgaySinh.getDay
         this.txtTimTen.textProperty().addListener(e -> {
             try {
                 this.tbKhachHang.getItems().clear();
@@ -62,10 +58,10 @@ public class TraCuuKH {
             }
         });
         this.loaddataKH();
-        
+
     }
-    
-    public void thoatXemKH(ActionEvent evt){
+
+    public void thoatXemKH(ActionEvent evt) {
         Stage stg = (Stage) btnThoat.getScene().getWindow();
         stg.close();
     }

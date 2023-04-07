@@ -56,7 +56,6 @@ public class QuanLyChiNhanh {
         this.loadTableData();
         this.txtSearch.textProperty().addListener(e -> {
             
-//                String diaChi = this.txtSearch.getText();
             try {
                 this.loadTableData(this.txtSearch.getText());
             } catch (SQLException ex) {
@@ -140,27 +139,14 @@ public class QuanLyChiNhanh {
         this.tbChiNhanh.getColumns().addAll(colId, colDiaChi, colDel);
     }
 
-//    public void loadTableData(String diaChi) throws SQLException {
-//        ChiNhanhService c = new ChiNhanhService();
-//        if (diaChi.isEmpty() || diaChi.equals("")) {
-//            this.tbChiNhanh.getColumns().clear();
-//            this.tbChiNhanh.setItems(FXCollections.observableList(c.getChiNhanh()));
-//        } else {
-//            this.tbChiNhanh.getColumns().clear();
-//            this.tbChiNhanh.setItems(FXCollections.observableList(c.getChiNhanh(diaChi)));
-//        }
-//
-//    }
     public void loadTableData() throws SQLException {
         ChiNhanhService c = new ChiNhanhService();
         
-//        this.tbChiNhanh.getColumns().clear();
         this.tbChiNhanh.setItems(FXCollections.observableList(c.getChiNhanh()));
     }
     
     public void loadTableData(String diaChi) throws SQLException {
         ChiNhanhService c = new ChiNhanhService();
-//        this.tbChiNhanh.getColumns().clear();
         this.tbChiNhanh.setItems(FXCollections.observableList(c.getChiNhanh(diaChi)));
     }
 
@@ -198,7 +184,7 @@ public class QuanLyChiNhanh {
             this.txtDiaChi.setText(g.getDiaChi() + "");
             this.txtMaChiNhanh.setText(g.getMaChiNhanh() + "");
         } else {
-            Alert c = MessageBox.getBox("Chọn Mã Giảm Giá", "Vui lòng chọn mã giảm giá muốn sửa thông tin trong tableview!", Alert.AlertType.CONFIRMATION);
+            Alert c = MessageBox.getBox("Chọn chi nhánh", "Vui lòng chọn chi nhánh muốn sửa thông tin trong tableview!", Alert.AlertType.CONFIRMATION);
             c.show();
         }
     }
@@ -210,12 +196,12 @@ public class QuanLyChiNhanh {
         ChiNhanh c = new ChiNhanh(diaChi, idcn);
         boolean kt = cn.updateChiNhanh(c);
         if (kt) {
-            Alert a = MessageBox.getBox("Cập nhật mã giảm giá", "Cập nhật mã giảm giá thành công!!!", Alert.AlertType.CONFIRMATION);
+            Alert a = MessageBox.getBox("Cập nhật chi nhánh", "Cập nhật chi nhánh thành công!!!", Alert.AlertType.CONFIRMATION);
             this.loadTableData();
             this.resetGiaTri();
             a.show();
         } else {
-            Alert b = MessageBox.getBox("Cập nhật mã giảm giá", "Cập nhật mã giảm giá thất bại!!!", Alert.AlertType.CONFIRMATION);
+            Alert b = MessageBox.getBox("Cập nhật chi nhánh", "Cập nhật chi nhánh thất bại!!!", Alert.AlertType.CONFIRMATION);
             b.show();
         }
     }

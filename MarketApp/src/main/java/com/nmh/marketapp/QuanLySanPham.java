@@ -14,7 +14,6 @@ import com.nmh.utils.MessageBox;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
-import java.util.function.UnaryOperator;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.collections.FXCollections;
@@ -31,7 +30,6 @@ import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
-import javafx.scene.control.TextFormatter;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 
@@ -80,18 +78,6 @@ public class QuanLySanPham {
             }
         });
 
-//        UnaryOperator<TextFormatter.Change> filter = change -> {
-//            String text = change.getText();
-//            if (text.matches("[0-9]*")) { // Chỉ cho phép nhập số
-//                return change;
-//            } else {
-//                Alert a = MessageBox.getBox("Cảnh báo", "Vui lòng nhập số!!", Alert.AlertType.WARNING);
-//                a.show();
-//            }
-//            return null;
-//        };
-//        TextFormatter<String> formatter = new TextFormatter<>(filter);
-//        this.txtGiaSP.setTextFormatter(formatter);
     }
 
     public List<GiamGia> loadMaGiamGia() throws SQLException {
@@ -171,7 +157,6 @@ public class QuanLySanPham {
         SanPhamService sp = new SanPhamService();
         List<SanPham> s = sp.getSanPham();
 
-//        this.tbSanPham.getColumns().clear();
         this.tbSanPham.setItems(FXCollections.observableList(s));
     }
 
