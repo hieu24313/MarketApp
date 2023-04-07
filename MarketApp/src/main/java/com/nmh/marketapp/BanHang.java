@@ -91,9 +91,7 @@ public class BanHang {
             double soTienNhan = Double.parseDouble(txtTienKHDua.getText());
             txtTinhTienDu.setText(" " + (soTienNhan - thanhTien));
         });
-//        this.txtMaKH.textProperty().addListener(e -> {
-//            //
-//        });
+
         UnaryOperator<Change> filter = change -> {
             String text = change.getText();
             if (text.matches("[0-9]*")) { // Chỉ cho phép nhập số
@@ -136,7 +134,8 @@ public class BanHang {
         this.lbMaNV.setText(nv.getMaNhanVien() + "");
         this.lbMaChiNhanh.setText(nv.getIdChiNhanh() + "");
         this.lbTenNV.setText(nv.getHoNV() + " " + nv.getTenNV());
-        this.loadSP();
+        int idchinhanh = Integer.parseInt(this.lbMaChiNhanh.getText());
+        this.loadSP(idchinhanh);
         this.txtSearch.setDisable(false);
 
         Alert a = MessageBox.getBox("Điểm Danh Thành Công!!", "Chào, " + nv.getHoNV() + " " + nv.getTenNV(), Alert.AlertType.CONFIRMATION);
@@ -181,8 +180,9 @@ public class BanHang {
 
                     boolean kt = hds.addHoaDon(s, cthd); //kiểm tra có add hóa đơn thành công không
                     if (kt) {
-                        this.loadSP(null); // load lại sản phẩm
-//                    this.tbHoaDon.re
+                        int idchinhanh1 = Integer.parseInt(this.lbMaChiNhanh.getText());
+                        this.loadSP(idchinhanh1); // load lại sản phẩm
+
                         Alert a = MessageBox.getBox("Thêm Hóa Đơn", "Thành Công!!!", Alert.AlertType.CONFIRMATION);
                         a.show();
 
@@ -209,9 +209,8 @@ public class BanHang {
 
                             boolean kt = hds.addHoaDon(s, cthd); //kiểm tra có add hóa đơn thành công không
                             if (kt) {
-                                this.loadSP(null); // load lại sản phẩm
-//                                this.tbHoaDon.getItems().clear();
-//                                this.tbHoaDon.getColumns().re
+                                int idchinhanh1 = Integer.parseInt(this.lbMaChiNhanh.getText());
+                                this.loadSP(idchinhanh1); // load lại sản phẩm
                                 this.loadTableColumnHD();
                                 Alert a = MessageBox.getBox("Thêm Hóa Đơn", "Thành Công!!!", Alert.AlertType.CONFIRMATION);
                                 a.show();
@@ -290,10 +289,17 @@ public class BanHang {
     }
 
     public void loadSP() throws SQLException {
-        int idchinhanh = Integer.parseInt(this.lbMaChiNhanh.getText());
-        List<SanPham> proc = p.getSanPham(idchinhanh);
+        List<SanPham> proc = p.getSanPham();
 
         this.tbProc.getItems().clear();
+        this.tbProc.setItems(FXCollections.observableList(proc));
+
+    }
+
+    public void loadSP(int idchinhanh) throws SQLException {
+        List<SanPham> proc = p.getSanPham(idchinhanh);
+
+//        this.tbProc.getItems().clear();
         this.tbProc.setItems(FXCollections.observableList(proc));
 
     }
