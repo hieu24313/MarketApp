@@ -11,6 +11,7 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.function.UnaryOperator;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.collections.FXCollections;
@@ -27,6 +28,7 @@ import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.TextFormatter;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 
@@ -58,7 +60,7 @@ public class QuanLyKhuyenMai {
         this.loaddataTable();
         this.setIDchoTextField();
         this.txtSearch.textProperty().addListener(e -> {
-            
+
             this.tbKhuyenMai.getItems().clear();
             try {
                 this.loaddataTable(Integer.parseInt(this.txtSearch.getText()));
@@ -66,6 +68,18 @@ public class QuanLyKhuyenMai {
                 Logger.getLogger(QuanLyKhuyenMai.class.getName()).log(Level.SEVERE, null, ex);
             }
         });
+        UnaryOperator<TextFormatter.Change> filter = change -> {
+            String text = change.getText();
+            if (text.matches("[0-9\\.]*")) { // Chỉ cho phép nhập số
+                return change;
+            } else {
+                Alert a = MessageBox.getBox("Cảnh báo", "Vui lòng nhập số!!", Alert.AlertType.WARNING);
+                a.show();
+            }
+            return null;
+        };
+        TextFormatter<String> formatter = new TextFormatter<>(filter);
+        this.txtGiaTri.setTextFormatter(formatter);
     }
 
     public void loadTBKhuyenMai() {
@@ -173,45 +187,49 @@ public class QuanLyKhuyenMai {
         }
 
     }
-    
-    public void suaGiamGia(ActionEvent evt){
+
+    public void suaGiamGia(ActionEvent evt) {
         Object selectedObject = tbKhuyenMai.getSelectionModel().getSelectedItem();
-        if(selectedObject != null){
+        if (selectedObject != null) {
             GiamGia g = (GiamGia) selectedObject;
             this.txtIdGiamGia.setText(g.getIdGiamGia() + "");
-            this.txtGiaTri.setText(g.getGiaTri()+ "");
+            this.txtGiaTri.setText(g.getGiaTri() + "");
             LocalDate tgBD = g.getTgBatDau().toLocalDate();
             LocalDate tgKT = g.getTgKetThuc().toLocalDate();
             this.dpTGBatDau.setValue(tgBD);
             this.dpTGKetThuc.setValue(tgKT);
-        }
-        else {
+        } else {
             Alert c = MessageBox.getBox("Chọn Mã Giảm Giá", "Vui lòng chọn mã giảm giá muốn sửa thông tin trong tableview!", Alert.AlertType.CONFIRMATION);
             c.show();
         }
     }
-    
-    public void updateGiamGia(ActionEvent evt) throws SQLException{
-        GiamGiaService gg = new GiamGiaService();
-        int idgg = Integer.parseInt(this.txtIdGiamGia.getText());
-        Double GiaTri = Double.valueOf(this.txtGiaTri.getText());
-        LocalDate tgBD = this.dpTGBatDau.getValue();
+
+    public void updateGiamGia(ActionEvent evt) throws SQLException {
+        if (!this.txtIdGiamGia.getText().isEmpty() && !this.txtGiaTri.getText().isEmpty() && this.dpTGBatDau.getValue() != null && this.dpTGKetThuc.getValue() != null) {
+            GiamGiaService gg = new GiamGiaService();
+            int idgg = Integer.parseInt(this.txtIdGiamGia.getText());
+            Double GiaTri = Double.valueOf(this.txtGiaTri.getText());
+            LocalDate tgBD = this.dpTGBatDau.getValue();
             java.sql.Date tgBatDau = java.sql.Date.valueOf(tgBD);
             LocalDate tgkt = this.dpTGKetThuc.getValue();
             java.sql.Date tgKetThuc = java.sql.Date.valueOf(tgkt);
-            
+
             GiamGia g = new GiamGia(idgg, GiaTri, tgBatDau, tgKetThuc);
             boolean kt = gg.updateGiamGia(g);
-            if(kt){
+            if (kt) {
                 Alert a = MessageBox.getBox("Cập nhật mã giảm giá", "Cập nhật mã giảm giá thành công!!!", Alert.AlertType.CONFIRMATION);
                 this.loaddataTable();
                 this.resetGiaTri();
                 a.show();
-            }
-            else {
+            } else {
                 Alert b = MessageBox.getBox("Cập nhật mã giảm giá", "Cập nhật mã giảm giá thất bại!!!", Alert.AlertType.CONFIRMATION);
                 b.show();
             }
+        } else {
+            Alert c = MessageBox.getBox("Cập Nhật Mã Giảm Giá", "Vui lòng nhập đầy đủ thông tin!!!", Alert.AlertType.CONFIRMATION);
+            c.show();
+        }
+
     }
 
     public void thoatQuanLy(ActionEvent e) throws IOException {

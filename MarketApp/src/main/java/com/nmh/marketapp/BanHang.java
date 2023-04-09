@@ -356,14 +356,22 @@ public class BanHang {
         }
     }
 
-    public void XoaSPKhoiHD(ActionEvent evt) {
+    public void XoaSPKhoiHD(ActionEvent evt) throws SQLException {
         Object selectedObject = tbHoaDon.getSelectionModel().getSelectedItem();
 
+        
+        SanPhamService sp = new SanPhamService();
+        
         if (selectedObject != null) {
             SanPham s = (SanPham) selectedObject;
             s.setSoluong(1);
-            this.tbProc.getItems().add(selectedObject);
-            this.tbHoaDon.getItems().remove(selectedObject);
+            for(SanPham q: sp.getSanPham()){
+                if(q.getIdSanPham() == s.getIdSanPham()){
+                    s.setGiaSP(q.getGiaSP());
+                }
+            }
+            this.tbProc.getItems().add(s);
+            this.tbHoaDon.getItems().remove(s);
             this.txtTong.setText(tinhTong() + "");
 
         } else {

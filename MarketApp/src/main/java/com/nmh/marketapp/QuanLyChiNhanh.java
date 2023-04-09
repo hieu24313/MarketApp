@@ -5,13 +5,10 @@
 package com.nmh.marketapp;
 
 import com.nmh.pojo.ChiNhanh;
-import com.nmh.pojo.GiamGia;
 import com.nmh.services.ChiNhanhService;
-import com.nmh.services.GiamGiaService;
 import com.nmh.utils.MessageBox;
 import java.io.IOException;
 import java.sql.SQLException;
-import java.time.LocalDate;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -29,7 +26,6 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.shape.Mesh;
 import javafx.stage.Stage;
 
 /**
@@ -190,7 +186,8 @@ public class QuanLyChiNhanh {
     }
 
     public void updateChiNhanh(ActionEvent evt) throws SQLException {
-        ChiNhanhService cn = new ChiNhanhService();
+        if(!this.txtDiaChi.getText().isEmpty()){
+            ChiNhanhService cn = new ChiNhanhService();
         int idcn = Integer.parseInt(this.txtMaChiNhanh.getText());
         String diaChi = this.txtDiaChi.getText();
         ChiNhanh c = new ChiNhanh(diaChi, idcn);
@@ -204,6 +201,11 @@ public class QuanLyChiNhanh {
             Alert b = MessageBox.getBox("Cập nhật chi nhánh", "Cập nhật chi nhánh thất bại!!!", Alert.AlertType.CONFIRMATION);
             b.show();
         }
+        }else{
+            Alert c = MessageBox.getBox("Cập nhật chi nhánh", "Vui lòng nhập đầy đủ thông tin!!!", Alert.AlertType.CONFIRMATION);
+            c.show();
+        }
+        
     }
 
 }
