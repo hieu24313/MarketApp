@@ -144,7 +144,7 @@ public class BanHang {
 
     @FXML
     public void LuuHoaDon(ActionEvent event) throws SQLException {
-        List<ChiTietHoaDon> cthd = new ArrayList<>(); // Tạo ra list để lưu chi tiết sản phẩm trong hóa đơn
+
         ObservableList<SanPham> allData = FXCollections.observableArrayList();
         allData.addAll(tbHoaDon.getItems()); //lấy all sản phẩm trong hóa đơn
 
@@ -153,35 +153,17 @@ public class BanHang {
                 Alert c = MessageBox.getBox("Cảnh Báo", "Vui lòng thêm sản phẩm vào hóa đơn!!", Alert.AlertType.WARNING);
                 c.show();
             } else {
-
-                HoaDonService hds = new HoaDonService(); //Tạo hóa đơn service
-                ChiTietHoaDonService ct = new ChiTietHoaDonService(); //Tạo chi tiết hóa đơn service
-                int idhd = hds.getHoaDon().get(hds.getHoaDon().size() - 1).getIdHoaDon() + 1; //lấy id hóa đơn cuối cùng +1
-                int idcthd = ct.getChiTietHoaDon().get(ct.getChiTietHoaDon().size() - 1).getIdChiTietHD() + 1; //lấy id chi tiết hóa đơn cuối +1
-                int idchinhanh = Integer.parseInt(this.lbMaChiNhanh.getText()); //lấy id chi nhánh
-                int idNV = Integer.parseInt(this.lbMaNV.getText());//lấy id nhân viên
                 int idKH = 1;
                 KhachHangService kh = new KhachHangService();
                 List<KhachHang> listkh = kh.getKhachHang();
                 if (this.txtMaKH.getText().isEmpty()) {
                     idKH = 1;
-                    double tong = Double.parseDouble(this.txtTong.getText()); //lấy tổng tiền
-                    double tienKHDua = Double.parseDouble(this.txtTienKHDua.getText()); //lấy tiền kh đưa được nhập vào
-                    java.time.LocalDate localDate = java.time.LocalDate.now();
-                    java.sql.Date NgayTao = java.sql.Date.valueOf(localDate);///tạo và ép kiểu ngày giờ tạo hóa đơn
 
-                    HoaDon s = new HoaDon(idhd, idchinhanh, idNV, idKH, tong, tienKHDua, NgayTao); //tạo hóa đơn để lưu
-
-                    for (SanPham c : allData) { // vòng for này để duyệt qua và lấy chi tiết của hóa đơn từ sản phẩm trong hóa đơn
-                        double thanhtien = c.getGiaSP() * c.getSoluong(); //thành tiền = số lượng * giá 1 sản phẩm
-                        cthd.add(new ChiTietHoaDon(idcthd, idhd, c.getIdSanPham(), c.getSoluong(), thanhtien));// thêm vào list chi tiết hóa đơn để lưu
-                        idcthd++;
-                    }
-
-                    boolean kt = hds.addHoaDon(s, cthd); //kiểm tra có add hóa đơn thành công không
+                    boolean kt = ThemHoaDonVaoDB(idKH); //kiểm tra có add hóa đơn thành công không
                     if (kt) {
                         int idchinhanh1 = Integer.parseInt(this.lbMaChiNhanh.getText());
                         this.loadSP(idchinhanh1); // load lại sản phẩm
+                        this.resetGiaTri();
 
                         Alert a = MessageBox.getBox("Thêm Hóa Đơn", "Thành Công!!!", Alert.AlertType.CONFIRMATION);
                         a.show();
@@ -195,23 +177,14 @@ public class BanHang {
                     for (KhachHang k : listkh) {
                         if (k.getIdKH() == kiemtraidKH) {
                             idKH = kiemtraidKH;
-                            double tong = Double.parseDouble(this.txtTong.getText()); //lấy tổng tiền
-                            double tienKHDua = Double.parseDouble(this.txtTienKHDua.getText()); //lấy tiền kh đưa được nhập vào
-                            java.time.LocalDate localDate = java.time.LocalDate.now();
-                            java.sql.Date NgayTao = java.sql.Date.valueOf(localDate);///tạo và ép kiểu ngày giờ tạo hóa đơn
 
-                            HoaDon s = new HoaDon(idhd, idchinhanh, idNV, idKH, tong, tienKHDua, NgayTao); //tạo hóa đơn để lưu
-
-                            for (SanPham c : allData) { // vòng for này để duyệt qua và lấy chi tiết của hóa đơn từ sản phẩm trong hóa đơn
-                                double thanhtien = c.getGiaSP() * c.getSoluong(); //thành tiền = số lượng * giá 1 sản phẩm
-                                cthd.add(new ChiTietHoaDon(idcthd, idhd, c.getIdSanPham(), c.getSoluong(), thanhtien));// thêm vào list chi tiết hóa đơn để lưu
-                            }
-
-                            boolean kt = hds.addHoaDon(s, cthd); //kiểm tra có add hóa đơn thành công không
+                            boolean kt = this.ThemHoaDonVaoDB(idKH); //kiểm tra có add hóa đơn thành công không
                             if (kt) {
                                 int idchinhanh1 = Integer.parseInt(this.lbMaChiNhanh.getText());
                                 this.loadSP(idchinhanh1); // load lại sản phẩm
                                 this.loadTableColumnHD();
+                                this.resetGiaTri();
+
                                 Alert a = MessageBox.getBox("Thêm Hóa Đơn", "Thành Công!!!", Alert.AlertType.CONFIRMATION);
                                 a.show();
 
@@ -234,6 +207,41 @@ public class BanHang {
             a2.show();
         }
 
+    }
+
+    public boolean ThemHoaDonVaoDB(int MaKH) throws SQLException {
+        List<ChiTietHoaDon> cthd = new ArrayList<>(); // Tạo ra list để lưu chi tiết sản phẩm trong hóa đơn
+        ObservableList<SanPham> allData = FXCollections.observableArrayList();
+        allData.addAll(tbHoaDon.getItems()); //lấy all sản phẩm trong hóa đơn
+        HoaDonService hds = new HoaDonService(); //Tạo hóa đơn service
+        ChiTietHoaDonService ct = new ChiTietHoaDonService(); //Tạo chi tiết hóa đơn service
+        int idhd = hds.getHoaDon().get(hds.getHoaDon().size() - 1).getIdHoaDon() + 1; //lấy id hóa đơn cuối cùng +1
+        int idcthd = ct.getChiTietHoaDon().get(ct.getChiTietHoaDon().size() - 1).getIdChiTietHD() + 1; //lấy id chi tiết hóa đơn cuối +1
+        int idchinhanh = Integer.parseInt(this.lbMaChiNhanh.getText()); //lấy id chi nhánh
+        int idNV = Integer.parseInt(this.lbMaNV.getText());//lấy id nhân viên
+        int idKH = MaKH;
+
+        double tong = Double.parseDouble(this.txtTong.getText()); //lấy tổng tiền
+        double tienKHDua = Double.parseDouble(this.txtTienKHDua.getText()); //lấy tiền kh đưa được nhập vào
+        java.time.LocalDate localDate = java.time.LocalDate.now();
+        java.sql.Date NgayTao = java.sql.Date.valueOf(localDate);///tạo và ép kiểu ngày giờ tạo hóa đơn
+
+        HoaDon s = new HoaDon(idhd, idchinhanh, idNV, idKH, tong, tienKHDua, NgayTao); //tạo hóa đơn để lưu
+
+        for (SanPham c : allData) { // vòng for này để duyệt qua và lấy chi tiết của hóa đơn từ sản phẩm trong hóa đơn
+            double thanhtien = c.getGiaSP() * c.getSoluong(); //thành tiền = số lượng * giá 1 sản phẩm
+            cthd.add(new ChiTietHoaDon(idcthd, idhd, c.getIdSanPham(), c.getSoluong(), thanhtien));// thêm vào list chi tiết hóa đơn để lưu
+            idcthd++;
+        }
+
+        return hds.addHoaDon(s, cthd);
+    }
+    
+
+    public void resetGiaTri() {
+        this.txtMaKH.setText("");
+        this.txtTienKHDua.setText("");
+        this.txtTinhTienDu.setText("");
     }
 
     public void loadTableColumnProc() throws SQLException {
@@ -342,6 +350,9 @@ public class BanHang {
             tbHoaDon.getItems().add(selectedObject);
             tbProc.getItems().remove(selectedObject);
             this.txtTong.setText(tinhTong() + "");
+        } else {
+            Alert a = MessageBox.getBox("Thêm Sản Phẩm", "Vui lòng chọn sản phẩm", Alert.AlertType.WARNING);
+            a.show();
         }
     }
 
@@ -355,6 +366,9 @@ public class BanHang {
             this.tbHoaDon.getItems().remove(selectedObject);
             this.txtTong.setText(tinhTong() + "");
 
+        } else {
+            Alert a = MessageBox.getBox("Thêm Sản Phẩm", "Vui lòng chọn sản phẩm", Alert.AlertType.WARNING);
+            a.show();
         }
     }
 
