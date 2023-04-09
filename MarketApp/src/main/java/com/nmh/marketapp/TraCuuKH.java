@@ -42,7 +42,7 @@ public class TraCuuKH {
         this.txtTimTen.textProperty().addListener(e -> {
             try {
                 this.tbKhachHang.getItems().clear();
-                this.loaddataKH(this.txtTimTen.getText(), "");
+                this.loaddataKH(this.txtTimTen.getText(),this.txtTimsdt.getText());
 
             } catch (SQLException ex) {
                 Logger.getLogger(DangNhap.class.getName()).log(Level.SEVERE, null, ex);
@@ -51,7 +51,7 @@ public class TraCuuKH {
         this.txtTimsdt.textProperty().addListener(e -> {
             try {
                 this.tbKhachHang.getItems().clear();
-                this.loaddataKH("", this.txtTimsdt.getText());
+                this.loaddataKH(this.txtTimTen.getText(), this.txtTimsdt.getText());
 
             } catch (SQLException ex) {
                 Logger.getLogger(DangNhap.class.getName()).log(Level.SEVERE, null, ex);
