@@ -106,10 +106,11 @@ public class QuanLyKhachHang {
 
             try {
                 kh.addKhachHang(k);
+                this.resetGiaTri();
+                this.loaddataKH();
                 this.loadIdKH();
                 Alert a = MessageBox.getBox("Thêm Khách Hàng", "Thêm Khách Hàng Thành Công!!!", Alert.AlertType.CONFIRMATION);
                 a.show();
-                this.resetGiaTri();
 
             } catch (SQLException ex) {
                 Alert b = MessageBox.getBox("Thêm Khách Hàng", "Thêm Khách Hàng Thất bại!!!", Alert.AlertType.ERROR);
@@ -131,14 +132,14 @@ public class QuanLyKhachHang {
         TableColumn colDel = new TableColumn();
         colDel.setCellFactory(r -> {
             Button btn = new Button("Xóa Khách Hàng");
-            
+
             btn.setOnAction(evt -> {
-                Alert a = MessageBox.getBox("Khách Hàng", 
-                        "Bạn muốn xóa khách này đúng không?", 
+                Alert a = MessageBox.getBox("Khách Hàng",
+                        "Bạn muốn xóa khách này đúng không?",
                         Alert.AlertType.CONFIRMATION);
                 a.showAndWait().ifPresent(res -> {
                     if (res == ButtonType.OK) {
-                        Button b = (Button)evt.getSource();
+                        Button b = (Button) evt.getSource();
                         TableCell cell = (TableCell) b.getParent();
                         KhachHang q = (KhachHang) cell.getTableRow().getItem();
                         try {
@@ -147,18 +148,19 @@ public class QuanLyKhachHang {
                                 this.loaddataKH(null);
                                 this.loadIdKH();
                                 this.resetGiaTri();
-                            } else
+                            } else {
                                 MessageBox.getBox("Khách Hàng", "Xóa Thất Bại!!!", Alert.AlertType.WARNING).show();
-                                
-                         } catch (SQLException ex) {
-                              MessageBox.getBox("Khách Hàng", ex.getMessage(), Alert.AlertType.WARNING).show();
+                            }
+
+                        } catch (SQLException ex) {
+                            MessageBox.getBox("Khách Hàng", ex.getMessage(), Alert.AlertType.WARNING).show();
                             Logger.getLogger(QuanLyKhachHang.class.getName()).log(Level.SEVERE, null, ex);
                         }
-                        
+
                     }
                 });
             });
-            
+
             TableCell c = new TableCell();
             c.setGraphic(btn);
             return c;
@@ -179,7 +181,6 @@ public class QuanLyKhachHang {
         this.tbKhachHang.getItems().clear();
         this.tbKhachHang.setItems(FXCollections.observableList(c.getKhachHang()));
     }
-    
 
     public void loaddataKH(String soDT) throws SQLException {
         KhachHangService c = new KhachHangService();
@@ -218,29 +219,34 @@ public class QuanLyKhachHang {
     }
 
     public void capNhatKhachHang(ActionEvent evt) throws SQLException {
-        int idKH = Integer.parseInt(this.txtMaKh.getText());
-        String hoKh = this.txtHoKH.getText();
-        String tenKH = this.txtTenKH.getText();
-        LocalDate ns = this.dpNgaySinh.getValue();
-        Date NgaySinh = java.sql.Date.valueOf(ns);
-        String soDT = this.txtSoDT.getText();
-        boolean kt = kh.updateKhachHang(new KhachHang(idKH, hoKh, tenKH, (java.sql.Date) NgaySinh, soDT));
-        if (kt) {
-            Alert a = MessageBox.getBox("Cập nhật thông tin khách hàng", "Cập nhật thành công!!!", Alert.AlertType.CONFIRMATION);
-            a.show();
-            this.loadIdKH();
-            this.resetGiaTri();
-            this.loaddataKH();
+        if (!this.txtHoKH.getText().isEmpty() && !this.txtTenKH.getText().isEmpty() && !this.txtSoDT.getText().isEmpty() && this.dpNgaySinh.getValue() != null) {
+            int idKH = Integer.parseInt(this.txtMaKh.getText());
+            String hoKh = this.txtHoKH.getText();
+            String tenKH = this.txtTenKH.getText();
+            LocalDate ns = this.dpNgaySinh.getValue();
+            Date NgaySinh = java.sql.Date.valueOf(ns);
+            String soDT = this.txtSoDT.getText();
+            boolean kt = kh.updateKhachHang(new KhachHang(idKH, hoKh, tenKH, (java.sql.Date) NgaySinh, soDT));
+            if (kt) {
+                Alert a = MessageBox.getBox("Cập nhật thông tin khách hàng", "Cập nhật thành công!!!", Alert.AlertType.CONFIRMATION);
+                a.show();
+                
+                this.resetGiaTri();
+                this.loadIdKH();
+                this.loaddataKH();
 
+            } else {
+                Alert b = MessageBox.getBox("Cập nhật thông tin khách hàng", "Cập nhật thất bại!!!", Alert.AlertType.CONFIRMATION);
+                b.show();
+            }
         } else {
-            Alert b = MessageBox.getBox("Cập nhật thông tin khách hàng", "Cập nhật thất bại!!!", Alert.AlertType.CONFIRMATION);
-            b.show();
+            Alert a = MessageBox.getBox("Thêm Khách Hàng", "Vui lòng nhập đầy đủ thông tin khách hàng", Alert.AlertType.CONFIRMATION);
+            a.show();
         }
 
     }
 
     public void resetGiaTri() {
-        this.txtMaKh.setText("");
         this.txtHoKH.setText("");
         this.txtTenKH.setText("");
         this.txtSoDT.setText("");

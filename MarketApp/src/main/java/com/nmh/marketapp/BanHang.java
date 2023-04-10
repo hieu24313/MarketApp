@@ -53,10 +53,6 @@ public class BanHang {
     private TextField txtSearch;
     @FXML
     private TableView tbHoaDon;
-//    @FXML
-//    private TextField txtTenNV;
-//    @FXML
-//    private TextField txtMaNV;
     @FXML
     private TextField txtTinhTienDu;
     @FXML

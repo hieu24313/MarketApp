@@ -259,6 +259,10 @@ public class QuanLySanPham {
             }
 
         }
+        else{
+            Alert c = MessageBox.getBox("Sửa Thông Tin Sản Phẩm", "Vui lòng chọn sản phẩm muốn sửa trong tableview!!!", Alert.AlertType.WARNING);
+            c.show();
+        }
     }
 
     public void updateSanPham(ActionEvent evt) throws SQLException {
