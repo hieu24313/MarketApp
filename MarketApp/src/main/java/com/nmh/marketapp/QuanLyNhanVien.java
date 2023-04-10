@@ -185,7 +185,7 @@ public class QuanLyNhanVien {
             }
             boolean chuaCoTaiKhoan = true;
             for (NhanVien n : this.layDSNhanVien()) {
-                if (n.equals(taiKhoan)) {
+                if (n.getTaiKhoan().equals(taiKhoan)) {
                     chuaCoTaiKhoan = false;
                 }
             }
