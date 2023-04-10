@@ -255,7 +255,7 @@ public class QuanLyNhanVien {
             }
 
         } else {
-            Alert c = MessageBox.getBox("Chọn Nhân Viên", "Vui lòng chọn khách hàng muốn sửa thông tin trong tableview!", Alert.AlertType.CONFIRMATION);
+            Alert c = MessageBox.getBox("Chọn Nhân Viên", "Vui lòng chọn nhân viên muốn sửa thông tin trong tableview!", Alert.AlertType.CONFIRMATION);
             c.show();
         }
     }
