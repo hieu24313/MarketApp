@@ -52,6 +52,7 @@ public class DangNhap {
                         formStage.setTitle("Trang Quản Lý");
                         formScene.setUserData(nv);
                         formStage.setUserData(nv);
+                        formStage.setResizable(false);
                         formStage.show();
                         Stage oldStage = (Stage) btnDangNhap.getScene().getWindow();
                         oldStage.close();
@@ -68,6 +69,7 @@ public class DangNhap {
                         formStage.setTitle("Trang Bán Hàng");
                         formStage.setUserData(nv);
                         formScene.setUserData(nv);
+                        formStage.setResizable(false);
                         formStage.show();
                         Stage oldStage = (Stage) btnDangNhap.getScene().getWindow();
                         oldStage.close();

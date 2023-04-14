@@ -41,6 +41,7 @@ public class QuanLy {
         Stage formStage = new Stage();
         formStage.setScene(formScene);
         formStage.setTitle("Quản Lý Sản Phẩm");
+        formStage.setResizable(false);
         formStage.show();
         Stage oldStage = (Stage) btnSanPham.getScene().getWindow();
         oldStage.close();
@@ -54,6 +55,7 @@ public class QuanLy {
         Stage formStage = new Stage();
         formStage.setScene(formScene);
         formStage.setTitle("Quản Lý Nhân Viên");
+        formStage.setResizable(false);
         formStage.show();
         Stage oldStage = (Stage) btnNhanVien.getScene().getWindow();
         oldStage.close();
@@ -67,6 +69,7 @@ public class QuanLy {
         Stage formStage = new Stage();
         formStage.setScene(formScene);
         formStage.setTitle("Quản Lý Khách Hàng");
+        formStage.setResizable(false);
         formStage.show();
         Stage oldStage = (Stage) btnKhachHang.getScene().getWindow();
         oldStage.close();
@@ -79,6 +82,7 @@ public class QuanLy {
         Stage formStage = new Stage();
         formStage.setScene(formScene);
         formStage.setTitle("Quản Lý Khuyễn Mãi");
+        formStage.setResizable(false);
         formStage.show();
         Stage oldStage = (Stage) btnKhuyenMai.getScene().getWindow();
         oldStage.close();
@@ -91,6 +95,7 @@ public class QuanLy {
         Stage formStage = new Stage();
         formStage.setScene(formScene);
         formStage.setTitle("Quản Lý Chi Nhánh");
+        formStage.setResizable(false);
         formStage.show();
         Stage oldStage = (Stage) btnChiNhanh.getScene().getWindow();
         oldStage.close();
@@ -103,6 +108,7 @@ public class QuanLy {
         Stage formStage = new Stage();
         formStage.setScene(formScene);
         formStage.setTitle("Trang Đăng Nhập");
+        formStage.setResizable(false);
         formStage.show();
         Stage oldStage = (Stage) btnDangXuat.getScene().getWindow();
         oldStage.close();

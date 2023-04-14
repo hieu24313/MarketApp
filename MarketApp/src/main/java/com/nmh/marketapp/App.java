@@ -26,6 +26,7 @@ public class App extends Application {
 
         scene = new Scene(loadFXML("DangNhap"));
         stage.setScene(scene);
+        stage.setResizable(false);
         stage.show();
     }
 
