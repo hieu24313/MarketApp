@@ -161,6 +161,7 @@ public class QuanLyKhuyenMai {
 
     public void addGiamGia(ActionEvent evt) throws SQLException {
         if (!this.txtIdGiamGia.getText().isEmpty() && !this.txtGiaTri.getText().isEmpty() && this.dpTGBatDau.getValue() != null && this.dpTGKetThuc.getValue() != null) {
+
             GiamGiaService agg = new GiamGiaService();
             int id = Integer.parseInt(this.txtIdGiamGia.getText());
             Double giaTri = Double.valueOf(this.txtGiaTri.getText());
@@ -168,18 +169,23 @@ public class QuanLyKhuyenMai {
             java.sql.Date tgBatDau = java.sql.Date.valueOf(tgBD);
             LocalDate tgkt = this.dpTGKetThuc.getValue();
             java.sql.Date tgKetThuc = java.sql.Date.valueOf(tgkt);
+            int kt = tgBD.compareTo(tgkt);
+            if (kt <= 0) {
+                GiamGia g = new GiamGia(id, giaTri, tgBatDau, tgKetThuc);
+                boolean kt1 = agg.addGiamGia(g);
+                if (kt1) {
+                    this.resetGiaTri();
+                    this.loaddataTable();
+                    Alert a = MessageBox.getBox("Giảm Giá", "Thêm Thành Công", Alert.AlertType.CONFIRMATION);
+                    a.show();
 
-            GiamGia g = new GiamGia(id, giaTri, tgBatDau, tgKetThuc);
-            boolean kt = agg.addGiamGia(g);
-            if (kt) {
-                this.resetGiaTri();
-                this.loaddataTable();
-                Alert a = MessageBox.getBox("Giảm Giá", "Thêm Thành Công", Alert.AlertType.CONFIRMATION);
-                a.show();
-
+                } else {
+                    Alert b = MessageBox.getBox("Giảm Giá", "Thêm Thất Bại", Alert.AlertType.CONFIRMATION);
+                    b.show();
+                }
             } else {
-                Alert b = MessageBox.getBox("Giảm Giá", "Thêm Thất Bại", Alert.AlertType.CONFIRMATION);
-                b.show();
+                Alert c = MessageBox.getBox("Giảm Giá", "Vui lòng nhập ngày bắt đầu trước ngày kết thúc", Alert.AlertType.CONFIRMATION);
+                c.show();
             }
         } else {
             Alert c = MessageBox.getBox("Thêm Mã Giảm Giá", "Vui lòng nhập đầy đủ thông tin!!!", Alert.AlertType.CONFIRMATION);
