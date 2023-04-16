@@ -180,7 +180,7 @@
                      <children>
                         <HBox prefHeight="47.0" prefWidth="358.0">
                            <children>
-                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Nhập mã hoặc tên sản phẩm :" wrappingWidth="168.24609375">
+                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Nhập tên sản phẩm :" wrappingWidth="168.24609375">
                                  <HBox.margin>
                                     <Insets left="10.0" top="20.0" />
                                  </HBox.margin>

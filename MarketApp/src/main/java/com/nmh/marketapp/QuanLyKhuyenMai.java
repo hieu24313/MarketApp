@@ -63,7 +63,13 @@ public class QuanLyKhuyenMai {
 
             this.tbKhuyenMai.getItems().clear();
             try {
-                this.loaddataTable(Integer.parseInt(this.txtSearch.getText()));
+                if(this.txtSearch.getText().isEmpty()){
+                    this.loaddataTable();
+                }
+                else{
+                    this.loaddataTable(Integer.parseInt(this.txtSearch.getText()));
+                }
+                
             } catch (SQLException ex) {
                 Logger.getLogger(QuanLyKhuyenMai.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -161,10 +167,12 @@ public class QuanLyKhuyenMai {
 
     public void addGiamGia(ActionEvent evt) throws SQLException {
         if (!this.txtIdGiamGia.getText().isEmpty() && !this.txtGiaTri.getText().isEmpty() && this.dpTGBatDau.getValue() != null && this.dpTGKetThuc.getValue() != null) {
-
-            GiamGiaService agg = new GiamGiaService();
-            int id = Integer.parseInt(this.txtIdGiamGia.getText());
+            
             Double giaTri = Double.valueOf(this.txtGiaTri.getText());
+            if(giaTri > 1 && giaTri<0){
+                GiamGiaService agg = new GiamGiaService();
+            int id = Integer.parseInt(this.txtIdGiamGia.getText());
+            
             LocalDate tgBD = this.dpTGBatDau.getValue();
             java.sql.Date tgBatDau = java.sql.Date.valueOf(tgBD);
             LocalDate tgkt = this.dpTGKetThuc.getValue();
@@ -187,6 +195,14 @@ public class QuanLyKhuyenMai {
                 Alert c = MessageBox.getBox("Giảm Giá", "Vui lòng nhập ngày bắt đầu trước ngày kết thúc", Alert.AlertType.CONFIRMATION);
                 c.show();
             }
+        }
+            else{
+                Alert d = MessageBox.getBox("Giảm Giá", "Vui lòng nhập giá trị từ 0-1 (Ví dụ: 0.35 = 35%)", Alert.AlertType.CONFIRMATION);
+                d.show();
+            }
+            
+            
+            //
         } else {
             Alert c = MessageBox.getBox("Thêm Mã Giảm Giá", "Vui lòng nhập đầy đủ thông tin!!!", Alert.AlertType.CONFIRMATION);
             c.show();
