@@ -110,13 +110,13 @@ public class GiamGiaServiceTest {
         GiamGia gg = new GiamGia(10, 100, Date.valueOf("2022-03-01"), Date.valueOf("2022-03-31"));
         boolean b = ggsv.updateGiamGia(gg);
         Assertions.assertTrue(b);
-        ds = ggsv.getGiamGia(1);
-//        for(GiamGia s : ds){
-//            Assertions.assertEquals(s.getIdGiamGia(),10);
-//            Assertions.assertEquals(s.getGiaTri(),100);
-//            Assertions.assertEquals(s.getTgBatDau(),Date.valueOf("2022-03-01"));
-//            Assertions.assertEquals(s.getTgKetThuc(),Date.valueOf("2022-03-31"));
-//        }
+        ds = ggsv.getGiamGia(10);
+        for(GiamGia s : ds){
+            Assertions.assertEquals(s.getIdGiamGia(),10);
+            Assertions.assertEquals(s.getGiaTri(),100);
+            Assertions.assertEquals(s.getTgBatDau(),Date.valueOf("2022-03-01"));
+            Assertions.assertEquals(s.getTgKetThuc(),Date.valueOf("2022-03-31"));
+        }
         if (b == true) {
             GiamGia ggOLD = new GiamGia(10, 1, Date.valueOf("2023-04-06"), Date.valueOf("2023-04-14"));
             boolean bNew = ggsv.updateGiamGia(ggOLD);
