@@ -169,7 +169,7 @@ public class QuanLyKhuyenMai {
         if (!this.txtIdGiamGia.getText().isEmpty() && !this.txtGiaTri.getText().isEmpty() && this.dpTGBatDau.getValue() != null && this.dpTGKetThuc.getValue() != null) {
             
             Double giaTri = Double.valueOf(this.txtGiaTri.getText());
-            if(giaTri > 1 && giaTri<0){
+            if(giaTri < 1 && giaTri>0){
                 GiamGiaService agg = new GiamGiaService();
             int id = Integer.parseInt(this.txtIdGiamGia.getText());
             
