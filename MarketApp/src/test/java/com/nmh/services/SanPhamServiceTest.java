@@ -105,7 +105,7 @@ public class SanPhamServiceTest {
     @Test
     public void testaddSanPham() throws Exception {
         List<SanPham> ds = new ArrayList<>();
-        SanPham sp = new SanPham(100, "Duy", 1000000, "người", "An Giang", 1, 0);
+        SanPham sp = new SanPham(100, "Duy", 1000000, "người", "An Giang", 1, 1);
         boolean b = spsv.addSanPham(sp);
         Assertions.assertEquals(b, true);
         ds = spsv.getSanPham(100);
@@ -124,16 +124,16 @@ public class SanPhamServiceTest {
     @Test
     public void testdeleteSanPham() throws Exception {
         List<SanPham> ds = new ArrayList<>();
-        SanPham sp = new SanPham(100, "Duy", 1000000, "người", "An Giang", 1, 0);
+        SanPham sp = new SanPham(101, "Duy", 1000000, "người", "An Giang", 1, 1);
         spsv.addSanPham(sp);
-        boolean b = spsv.deleteSanPham(100);
+        boolean b = spsv.deleteSanPham(101);
         Assertions.assertEquals(b, true);
     }
 
     @Test
     public void testupdateSanPham() throws Exception {
         List<SanPham> ds = new ArrayList<>();
-        SanPham sp = new SanPham(14, "Duy", 1000000, "người", "An Giang", 1, 0);
+        SanPham sp = new SanPham(14, "Duy", 1000000, "người", "An Giang", 1, 1);
         boolean b = spsv.updateSanPham(sp);
         Assertions.assertTrue(b);
         ds = spsv.getSanPham(14);

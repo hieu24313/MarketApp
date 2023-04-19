@@ -174,12 +174,14 @@ public class QuanLySanPham {
     }
 
     public void themSanPham(ActionEvent evt) throws SQLException {
-        if (!this.txtTenSanPham.getText().isEmpty() && !this.txtGiaSP.getText().isEmpty() && !this.txtDonVi.getText().isEmpty() && !this.txtXuatXu.getText().isEmpty() && this.cbMaGiamGia.getValue() != null) {
+        Double Gia = Double.valueOf(this.txtGiaSP.getText());
+        if (Gia > 0 && !this.txtTenSanPham.getText().isEmpty() && !this.txtGiaSP.getText().isEmpty() && !this.txtDonVi.getText().isEmpty() && !this.txtXuatXu.getText().isEmpty() && this.cbMaGiamGia.getValue() != null) {
 
+            
             try {
                 int idSP = Integer.parseInt(this.txtMaSanPham.getText());
                 String tenSP = this.txtTenSanPham.getText();
-                Double Gia = Double.valueOf(this.txtGiaSP.getText());
+                
                 String DonVi = this.txtDonVi.getText();
                 String XuatXu = this.txtXuatXu.getText();
                 GiamGia g = (GiamGia) this.cbMaGiamGia.getValue();
@@ -207,7 +209,7 @@ public class QuanLySanPham {
             }
 
         } else {
-            Alert a = MessageBox.getBox("Thêm Sản Phẩm", "Vui lòng nhập đầy đủ thông tin!!!", Alert.AlertType.CONFIRMATION);
+            Alert a = MessageBox.getBox("Thêm Sản Phẩm", "Vui lòng nhập đầy đủ và đúng thông tin!!!", Alert.AlertType.CONFIRMATION);
             a.show();
         }
 
@@ -266,11 +268,14 @@ public class QuanLySanPham {
     }
 
     public void updateSanPham(ActionEvent evt) throws SQLException {
-        if (!this.txtTenSanPham.getText().isEmpty() && !this.txtGiaSP.getText().isEmpty() && !this.txtDonVi.getText().isEmpty() && !this.txtXuatXu.getText().isEmpty() && this.cbMaGiamGia.getValue() != null) {
+        
+        Double Gia = Double.valueOf(this.txtGiaSP.getText());
+        
+        if (Gia > 0 && !this.txtTenSanPham.getText().isEmpty() && !this.txtGiaSP.getText().isEmpty() && !this.txtDonVi.getText().isEmpty() && !this.txtXuatXu.getText().isEmpty() && this.cbMaGiamGia.getValue() != null) {
             try {
                 int idSP = Integer.parseInt(this.txtMaSanPham.getText());
                 String tenSP = this.txtTenSanPham.getText();
-                Double Gia = Double.valueOf(this.txtGiaSP.getText());
+                
                 String DonVi = this.txtDonVi.getText();
                 String XuatXu = this.txtXuatXu.getText();
                 GiamGia g = (GiamGia) this.cbMaGiamGia.getValue();
@@ -297,7 +302,7 @@ public class QuanLySanPham {
                 a.show();
             }
         } else {
-            Alert a = MessageBox.getBox("Cập Nhật Sản Phẩm", "Vui lòng nhập đầy đủ thông tin!!!", Alert.AlertType.CONFIRMATION);
+            Alert a = MessageBox.getBox("Cập Nhật Sản Phẩm", "Vui lòng nhập đầy đủ và đúng thông tin!!!", Alert.AlertType.CONFIRMATION);
             a.show();
         }
     }

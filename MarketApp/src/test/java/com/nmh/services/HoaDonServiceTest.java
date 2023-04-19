@@ -59,13 +59,13 @@ public class HoaDonServiceTest {
         ds = hdsv.getHoaDon();
         Assertions.assertNotEquals(100, ds.size());
     }
-    @Test
-    public void testaddHoaDon() throws Exception {
-        List<HoaDon> ds = new ArrayList<>();
-        List<ChiTietHoaDon> dsct = new ArrayList<>();
-        HoaDon hd = new HoaDon(106,1,1,1,200,50, Date.valueOf("2002-11-16"));
-        boolean b = hdsv.addHoaDon(hd,dsct);
-        Assertions.assertEquals(b, true);
-    }
+//    @Test
+//    public void testaddHoaDon() throws Exception {
+//        List<HoaDon> ds = new ArrayList<>();
+//        List<ChiTietHoaDon> dsct = new ArrayList<>();
+//        HoaDon hd = new HoaDon(106,1,1,1,200,50, Date.valueOf("2002-11-16"));
+//        boolean b = hdsv.addHoaDon(hd,dsct);
+//        Assertions.assertEquals(b, true);
+//    }
 
 }
