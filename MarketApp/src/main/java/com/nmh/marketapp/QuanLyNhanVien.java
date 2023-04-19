@@ -275,7 +275,14 @@ public class QuanLyNhanVien {
                 loaiNhanVien = false;
             }
             boolean chuaCoTaiKhoan = true;
-            for (NhanVien n : this.layDSNhanVien()) {
+            List<NhanVien> s = layDSNhanVien();
+            for(int i = 0; i < s.size(); i++){
+                if(s.get(i).getMaNhanVien() == idnv){
+                    s.remove(i);
+                    break;
+                }
+            }
+            for (NhanVien n : s) {
                 if (n.getTaiKhoan().equals(taiKhoan)) {
                     chuaCoTaiKhoan = false;
                 }

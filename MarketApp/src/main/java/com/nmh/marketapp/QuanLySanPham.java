@@ -174,43 +174,47 @@ public class QuanLySanPham {
     }
 
     public void themSanPham(ActionEvent evt) throws SQLException {
-        Double Gia = Double.valueOf(this.txtGiaSP.getText());
-        if (Gia > 0 && !this.txtTenSanPham.getText().isEmpty() && !this.txtGiaSP.getText().isEmpty() && !this.txtDonVi.getText().isEmpty() && !this.txtXuatXu.getText().isEmpty() && this.cbMaGiamGia.getValue() != null) {
+        try {
+            Double Gia = Double.valueOf(this.txtGiaSP.getText());
+            if (Gia > 0 && !this.txtTenSanPham.getText().isEmpty() && !this.txtGiaSP.getText().isEmpty() && !this.txtDonVi.getText().isEmpty() && !this.txtXuatXu.getText().isEmpty() && this.cbMaGiamGia.getValue() != null) {
 
-            
-            try {
-                int idSP = Integer.parseInt(this.txtMaSanPham.getText());
-                String tenSP = this.txtTenSanPham.getText();
-                
-                String DonVi = this.txtDonVi.getText();
-                String XuatXu = this.txtXuatXu.getText();
-                GiamGia g = (GiamGia) this.cbMaGiamGia.getValue();
-                int idGiamGia = g.getIdGiamGia();
+                try {
+                    int idSP = Integer.parseInt(this.txtMaSanPham.getText());
+                    String tenSP = this.txtTenSanPham.getText();
 
-                ChiNhanh cn = (ChiNhanh) this.cbMaChiNhanh.getValue();
-                int idChiNhanh = cn.getMaChiNhanh();
+                    String DonVi = this.txtDonVi.getText();
+                    String XuatXu = this.txtXuatXu.getText();
+                    GiamGia g = (GiamGia) this.cbMaGiamGia.getValue();
+                    int idGiamGia = g.getIdGiamGia();
 
-                SanPhamService sp = new SanPhamService();
-                SanPham s = new SanPham(idSP, tenSP, Gia, DonVi, XuatXu, idChiNhanh, idGiamGia);
-                boolean kt = sp.addSanPham(s);
-                if (kt) {
-                    Alert a = MessageBox.getBox("Thêm Sản Phẩm", "Thêm Sản Phẩm Thành Công!!!", Alert.AlertType.CONFIRMATION);
-                    a.show();
-                    this.loadDaTaSanPham();
-                    this.resetGiaTri();
-                    this.ganIdChoTextField();
-                } else {
-                    Alert a = MessageBox.getBox("Thêm Sản Phẩm", "Thêm Sản Phẩm Thất Bại!!!", Alert.AlertType.CONFIRMATION);
+                    ChiNhanh cn = (ChiNhanh) this.cbMaChiNhanh.getValue();
+                    int idChiNhanh = cn.getMaChiNhanh();
+
+                    SanPhamService sp = new SanPhamService();
+                    SanPham s = new SanPham(idSP, tenSP, Gia, DonVi, XuatXu, idChiNhanh, idGiamGia);
+                    boolean kt = sp.addSanPham(s);
+                    if (kt) {
+                        Alert a = MessageBox.getBox("Thêm Sản Phẩm", "Thêm Sản Phẩm Thành Công!!!", Alert.AlertType.CONFIRMATION);
+                        a.show();
+                        this.loadDaTaSanPham();
+                        this.resetGiaTri();
+                        this.ganIdChoTextField();
+                    } else {
+                        Alert a = MessageBox.getBox("Thêm Sản Phẩm", "Thêm Sản Phẩm Thất Bại!!!", Alert.AlertType.CONFIRMATION);
+                        a.show();
+                    }
+                } catch (NumberFormatException ex) {
+                    Alert a = MessageBox.getBox("Thêm Sản Phẩm", "Vui lòng chỉ nhập số vào ô giá trị!!!!", Alert.AlertType.CONFIRMATION);
                     a.show();
                 }
-            } catch (NumberFormatException ex) {
-                Alert a = MessageBox.getBox("Thêm Sản Phẩm", "Vui lòng chỉ nhập số vào ô giá trị!!!!", Alert.AlertType.CONFIRMATION);
+
+            } else {
+                Alert a = MessageBox.getBox("Thêm Sản Phẩm", "Vui lòng nhập đầy đủ và đúng thông tin!!!", Alert.AlertType.CONFIRMATION);
                 a.show();
             }
-
-        } else {
-            Alert a = MessageBox.getBox("Thêm Sản Phẩm", "Vui lòng nhập đầy đủ và đúng thông tin!!!", Alert.AlertType.CONFIRMATION);
-            a.show();
+        } catch (NumberFormatException | SQLException ex) {
+            Alert s = MessageBox.getBox("Thêm Sản Phẩm", "Vui lòng nhập đầy đủ và đúng thông tin!!!", Alert.AlertType.CONFIRMATION);
+            s.show();
         }
 
     }
@@ -260,50 +264,55 @@ public class QuanLySanPham {
                 }
             }
 
-        }
-        else{
+        } else {
             Alert c = MessageBox.getBox("Sửa Thông Tin Sản Phẩm", "Vui lòng chọn sản phẩm muốn sửa trong tableview!!!", Alert.AlertType.WARNING);
             c.show();
         }
     }
 
     public void updateSanPham(ActionEvent evt) throws SQLException {
-        
-        Double Gia = Double.valueOf(this.txtGiaSP.getText());
-        
-        if (Gia > 0 && !this.txtTenSanPham.getText().isEmpty() && !this.txtGiaSP.getText().isEmpty() && !this.txtDonVi.getText().isEmpty() && !this.txtXuatXu.getText().isEmpty() && this.cbMaGiamGia.getValue() != null) {
-            try {
-                int idSP = Integer.parseInt(this.txtMaSanPham.getText());
-                String tenSP = this.txtTenSanPham.getText();
-                
-                String DonVi = this.txtDonVi.getText();
-                String XuatXu = this.txtXuatXu.getText();
-                GiamGia g = (GiamGia) this.cbMaGiamGia.getValue();
-                int idGiamGia = g.getIdGiamGia();
 
-                ChiNhanh cn = (ChiNhanh) this.cbMaChiNhanh.getValue();
-                int idChiNhanh = cn.getMaChiNhanh();
+        try {
 
-                SanPhamService sp = new SanPhamService();
-                SanPham s = new SanPham(idSP, tenSP, Gia, DonVi, XuatXu, idChiNhanh, idGiamGia);
-                boolean kt = sp.updateSanPham(s);
-                if (kt) {
-                    Alert a = MessageBox.getBox("Cập Nhật Sản Phẩm", "Cập Nhật Sản Phẩm Thành Công!!!", Alert.AlertType.CONFIRMATION);
-                    a.show();
-                    this.loadDaTaSanPham();
-                    this.resetGiaTri();
-                    this.ganIdChoTextField();
-                } else {
-                    Alert a = MessageBox.getBox("Cập Nhật Sản Phẩm", "Cập Nhật Sản Phẩm Thất Bại!!!", Alert.AlertType.CONFIRMATION);
+            Double Gia = Double.valueOf(this.txtGiaSP.getText());
+
+            if (Gia > 0 && !this.txtTenSanPham.getText().isEmpty() && !this.txtGiaSP.getText().isEmpty() && !this.txtDonVi.getText().isEmpty() && !this.txtXuatXu.getText().isEmpty() && this.cbMaGiamGia.getValue() != null) {
+                try {
+                    int idSP = Integer.parseInt(this.txtMaSanPham.getText());
+                    String tenSP = this.txtTenSanPham.getText();
+
+                    String DonVi = this.txtDonVi.getText();
+                    String XuatXu = this.txtXuatXu.getText();
+                    GiamGia g = (GiamGia) this.cbMaGiamGia.getValue();
+                    int idGiamGia = g.getIdGiamGia();
+
+                    ChiNhanh cn = (ChiNhanh) this.cbMaChiNhanh.getValue();
+                    int idChiNhanh = cn.getMaChiNhanh();
+
+                    SanPhamService sp = new SanPhamService();
+                    SanPham s = new SanPham(idSP, tenSP, Gia, DonVi, XuatXu, idChiNhanh, idGiamGia);
+                    boolean kt = sp.updateSanPham(s);
+                    if (kt) {
+                        Alert a = MessageBox.getBox("Cập Nhật Sản Phẩm", "Cập Nhật Sản Phẩm Thành Công!!!", Alert.AlertType.CONFIRMATION);
+                        a.show();
+                        this.loadDaTaSanPham();
+                        this.resetGiaTri();
+                        this.ganIdChoTextField();
+                    } else {
+                        Alert a = MessageBox.getBox("Cập Nhật Sản Phẩm", "Cập Nhật Sản Phẩm Thất Bại!!!", Alert.AlertType.CONFIRMATION);
+                        a.show();
+                    }
+                } catch (NumberFormatException ex) {
+                    Alert a = MessageBox.getBox("Thêm Sản Phẩm", "Vui lòng chỉ nhập số vào ô giá trị!!!!", Alert.AlertType.CONFIRMATION);
                     a.show();
                 }
-            } catch (NumberFormatException ex) {
-                Alert a = MessageBox.getBox("Thêm Sản Phẩm", "Vui lòng chỉ nhập số vào ô giá trị!!!!", Alert.AlertType.CONFIRMATION);
+            } else {
+                Alert a = MessageBox.getBox("Cập Nhật Sản Phẩm", "Vui lòng nhập đầy đủ và đúng thông tin!!!", Alert.AlertType.CONFIRMATION);
                 a.show();
             }
-        } else {
-            Alert a = MessageBox.getBox("Cập Nhật Sản Phẩm", "Vui lòng nhập đầy đủ và đúng thông tin!!!", Alert.AlertType.CONFIRMATION);
-            a.show();
+        } catch (NumberFormatException | SQLException ex) {
+            Alert s = MessageBox.getBox("Thêm Sản Phẩm", "Vui lòng nhập đầy đủ và đúng thông tin!!!", Alert.AlertType.CONFIRMATION);
+            s.show();
         }
     }
 }
