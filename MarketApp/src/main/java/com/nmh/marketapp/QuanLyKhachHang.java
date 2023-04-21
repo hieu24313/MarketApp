@@ -196,6 +196,7 @@ public class QuanLyKhachHang {
         Stage formStage = new Stage();
         formStage.setScene(formScene);
         formStage.setTitle("Trang Quản Lý");
+        formStage.setResizable(false);
         formStage.show();
         Stage oldStage = (Stage) btnThoat.getScene().getWindow();
         oldStage.close();

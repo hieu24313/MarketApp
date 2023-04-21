@@ -82,10 +82,13 @@ public class BanHang {
         this.loadTableColumnHD();
         this.tbHoaDon.setEditable(true);
         this.btnLuuHoaDon.setDisable(true);
-        txtTienKHDua.textProperty().addListener(e -> {
+
+        this.txtTienKHDua.textProperty().addListener(e -> {
+
             double thanhTien = Double.parseDouble(this.txtTong.getText());
             double soTienNhan = Double.parseDouble(txtTienKHDua.getText());
             txtTinhTienDu.setText(" " + (soTienNhan - thanhTien));
+
         });
 
         UnaryOperator<Change> filter = change -> {
@@ -232,7 +235,6 @@ public class BanHang {
 
         return hds.addHoaDon(s, cthd);
     }
-    
 
     public void resetGiaTri() {
         this.txtMaKH.setText("");
@@ -261,7 +263,7 @@ public class BanHang {
         this.tbProc.getColumns().addAll(colId, colTen, colDon, colGia, colXuatXu, colChiNhanh, colGiamGia);
     }
 
-    public void loadTableColumnHD() throws SQLException {
+    public void loadTableColumnHD()  throws SQLException {
 
         TableColumn colId1 = new TableColumn("Mã Sản Phẩm");
         TableColumn colTen1 = new TableColumn("Tên Sản Phẩm");
@@ -284,9 +286,13 @@ public class BanHang {
 
         colSoluong.setCellFactory(TextFieldTableCell.forTableColumn(new DoubleStringConverter()));
         colSoluong.setOnEditCommit((TableColumn.CellEditEvent<SanPham, Double> event) -> {
-            SanPham sp = event.getTableView().getItems().get(event.getTablePosition().getRow());
-            sp.setSoluong(event.getNewValue());
-            this.txtTong.setText(tinhTong() + " ");
+            try {
+                SanPham sp = event.getTableView().getItems().get(event.getTablePosition().getRow());
+                sp.setSoluong(event.getNewValue());
+                this.txtTong.setText(tinhTong() + " ");
+            } catch (SQLException ex) {
+                Logger.getLogger(BanHang.class.getName()).log(Level.SEVERE, null, ex);
+            }
         });
 
         this.tbHoaDon.getColumns().addAll(colSoluong, colId1, colTen1, colDon1, colGia1, colXuatXu1, colChiNhanh1, colGiamGia1);
@@ -343,6 +349,7 @@ public class BanHang {
                     }
                 }
             }
+
             tbHoaDon.getItems().add(selectedObject);
             tbProc.getItems().remove(selectedObject);
             this.txtTong.setText(tinhTong() + "");
@@ -355,14 +362,13 @@ public class BanHang {
     public void XoaSPKhoiHD(ActionEvent evt) throws SQLException {
         Object selectedObject = tbHoaDon.getSelectionModel().getSelectedItem();
 
-        
         SanPhamService sp = new SanPhamService();
-        
+
         if (selectedObject != null) {
             SanPham s = (SanPham) selectedObject;
             s.setSoluong(1);
-            for(SanPham q: sp.getSanPham()){
-                if(q.getIdSanPham() == s.getIdSanPham()){
+            for (SanPham q : sp.getSanPham()) {
+                if (q.getIdSanPham() == s.getIdSanPham()) {
                     s.setGiaSP(q.getGiaSP());
                 }
             }
@@ -376,12 +382,32 @@ public class BanHang {
         }
     }
 
-    public long tinhTong() {
+    public long tinhTong() throws SQLException {
         ObservableList<SanPham> allData = FXCollections.observableArrayList();
         allData.addAll(tbHoaDon.getItems());
         long tong = 0;
         for (SanPham c : allData) {
             tong += c.getGiaSP() * c.getSoluong();
+        }
+        boolean ktkm = false;
+        if (!this.txtMaKH.getText().isEmpty()) {
+            int idkh = Integer.parseInt(this.txtMaKH.getText());
+            KhachHangService kh = new KhachHangService();
+            List<KhachHang> k;
+            k = kh.getKhachHang();
+            for (KhachHang c : k) {
+
+                if (c.getIdKH() == idkh) {
+                    LocalDate hientai = LocalDate.now();
+                    if (hientai.compareTo(c.getNgaySinh().toLocalDate()) == 0) {
+                        ktkm = true;
+                        break;
+                    }
+                }
+            }
+        }
+        if(ktkm && tong > 1000000){
+            tong = (long) (tong - tong*0.1);
         }
         return tong;
     }
@@ -404,6 +430,7 @@ public class BanHang {
         Stage formStage = new Stage();
         formStage.setScene(formScene);
         formStage.setTitle("Trang Đăng Nhập");
+        formStage.setResizable(false);
         formStage.show();
         Stage oldStage = (Stage) btnDangXuat.getScene().getWindow();
         oldStage.close();
