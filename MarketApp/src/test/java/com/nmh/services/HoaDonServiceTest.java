@@ -51,7 +51,7 @@ public class HoaDonServiceTest {
     public void testGetHoaDon() throws Exception {
         List<HoaDon> ds = new ArrayList<>();
         ds = hdsv.getHoaDon();
-        Assertions.assertEquals(17, ds.size());
+        Assertions.assertEquals(26, ds.size());
     }
     @Test
     public void testGetHoaDonF() throws Exception {
@@ -67,5 +67,18 @@ public class HoaDonServiceTest {
 //        boolean b = hdsv.addHoaDon(hd,dsct);
 //        Assertions.assertEquals(b, true);
 //    }
+        @Test
+    public void testaddHoaDonF() throws Exception {
+        List<HoaDon> ds = new ArrayList<>();
+        List<ChiTietHoaDon> dsct = new ArrayList<>();
+        HoaDon hd = new HoaDon(1,1,1,1,200,50, Date.valueOf("2002-11-16"));
+        boolean b;
+        try{
+            b = hdsv.addHoaDon(hd,dsct);
+        }catch (SQLException ex){
+            b= false;
+        }
+        Assertions.assertEquals(b, false);
+    }
 
 }

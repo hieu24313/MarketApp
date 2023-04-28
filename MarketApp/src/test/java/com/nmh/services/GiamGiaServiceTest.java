@@ -94,7 +94,18 @@ public class GiamGiaServiceTest {
         }
         ggsv.deleteGiamGia(100);
     }
+    @Test
+    public void testaddGiamGiaF() throws Exception {
+        GiamGia gg = new GiamGia(1, 0.1, Date.valueOf("2022-03-01"), Date.valueOf("2022-03-31"));
+        boolean b;
+        try {
+            b = ggsv.addGiamGia(gg);
+        }catch (SQLException ex){
+            b =false;
+        }
+        Assertions.assertEquals(b, false);
 
+    }
     @Test
     public void testdeleteGiamGia() throws Exception {
         List<GiamGia> ds = new ArrayList<>();
@@ -102,6 +113,16 @@ public class GiamGiaServiceTest {
         ggsv.addGiamGia(gg);
         boolean b = ggsv.deleteGiamGia(100);
         Assertions.assertEquals(b, true);
+    }
+    @Test
+    public void testdeleteGiamGiaF() throws Exception {
+        boolean b;
+        try {
+            b = ggsv.deleteGiamGia(200);
+        }catch (SQLException ex){
+            b =false;
+        }
+        Assertions.assertEquals(b, false);
     }
 
     @Test

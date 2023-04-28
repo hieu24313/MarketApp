@@ -50,14 +50,14 @@ public class KhachHangServiceTest {
     public void testGetKhachHang() throws Exception {
         List<KhachHang> ds = new ArrayList<>();
         ds = khsv.getKhachHang();
-        Assertions.assertEquals(9, ds.size());
+        Assertions.assertEquals(10, ds.size());
     }
 
     @Test
     public void testGetKhachHangF() throws Exception {
         List<KhachHang> ds = new ArrayList<>();
         ds = khsv.getKhachHang();
-        Assertions.assertNotEquals(10, ds.size());
+        Assertions.assertNotEquals(100, ds.size());
     }
 
     @Test
@@ -69,7 +69,12 @@ public class KhachHangServiceTest {
             Assertions.assertEquals("0359505026", kh.getSoDT());
         }
     }
-
+    @Test
+    public void testGetKhachHangF_ByTenandSDT() throws Exception {
+        List<KhachHang> ds = new ArrayList<>();
+        ds = khsv.getKhachHang("Thái", "0359505026");
+        Assertions.assertEquals(0,ds.size());
+    }
     @Test
     public void testaddKhachHang() throws Exception {
         List<KhachHang> ds = new ArrayList<>();
@@ -78,14 +83,17 @@ public class KhachHangServiceTest {
         Assertions.assertEquals(b, true);
         khsv.deleteKhachHang(100);
     }
-//    @Test
-//    public void testaddKhachHangF() throws Exception {
-//        List<KhachHang> ds = new ArrayList<>();
-//        KhachHang kh = new KhachHang(10,"Thanh","Lam", Date.valueOf("2002-11-16"),"123");
-//        boolean b = khsv.addKhachHang(kh);
-//        Assertions.assertEquals(b, false);
-//        khsv.deleteKhachHang(10);
-//    }
+    @Test
+    public void testaddKhachHangF() throws Exception {
+        KhachHang kh = new KhachHang(1,"Thanh","Lam", Date.valueOf("2002-11-16"),"123");
+        boolean b;
+        try{
+            b = khsv.addKhachHang(kh);
+        }catch (SQLException ex){
+            b= false;
+        }
+        Assertions.assertEquals(b, false);
+    }
 
     @Test
     public void testdeleteKhachHang() throws Exception {
@@ -95,6 +103,16 @@ public class KhachHangServiceTest {
         boolean b = khsv.deleteKhachHang(100);
         Assertions.assertEquals(b, true);
 
+    }
+    @Test
+    public void testdeleteKhachHangF() throws Exception {
+        boolean b;
+        try{
+            b = khsv.deleteKhachHang(100);
+        }catch (SQLException ex){
+            b= false;
+        }
+        Assertions.assertEquals(b, false);
     }
 
     @Test

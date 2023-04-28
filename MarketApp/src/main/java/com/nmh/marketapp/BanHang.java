@@ -86,10 +86,11 @@ public class BanHang {
         this.txtTienKHDua.textProperty().addListener(e -> {
 
             double thanhTien = Double.parseDouble(this.txtTong.getText());
-            double soTienNhan = Double.parseDouble(txtTienKHDua.getText());
-            txtTinhTienDu.setText(" " + (soTienNhan - thanhTien));
+            double soTienNhan = Double.parseDouble(this.txtTienKHDua.getText());
+            txtTinhTienDu.setText((soTienNhan - thanhTien) + "");
 
         });
+        this.txtTienKHDua.setDisable(true);
 
         UnaryOperator<Change> filter = change -> {
             String text = change.getText();
@@ -163,10 +164,9 @@ public class BanHang {
                         int idchinhanh1 = Integer.parseInt(this.lbMaChiNhanh.getText());
                         this.loadSP(idchinhanh1); // load lại sản phẩm
                         this.resetGiaTri();
-
+                        this.tbHoaDon.getItems().clear();
                         Alert a = MessageBox.getBox("Thêm Hóa Đơn", "Thành Công!!!", Alert.AlertType.CONFIRMATION);
                         a.show();
-
                     } else {
                         Alert a1 = MessageBox.getBox("Thêm Hóa Đơn", "Thất Bại!!!", Alert.AlertType.CONFIRMATION);
                         a1.show();
@@ -191,6 +191,7 @@ public class BanHang {
                                 Alert a1 = MessageBox.getBox("Thêm Hóa Đơn", "Thất Bại!!!", Alert.AlertType.CONFIRMATION);
                                 a1.show();
                             }
+                            break;
                         }
                     }
                     if (idKH == 1) {
@@ -263,7 +264,7 @@ public class BanHang {
         this.tbProc.getColumns().addAll(colId, colTen, colDon, colGia, colXuatXu, colChiNhanh, colGiamGia);
     }
 
-    public void loadTableColumnHD()  throws SQLException {
+    public void loadTableColumnHD() throws SQLException {
 
         TableColumn colId1 = new TableColumn("Mã Sản Phẩm");
         TableColumn colTen1 = new TableColumn("Tên Sản Phẩm");
@@ -333,6 +334,8 @@ public class BanHang {
     public void themSPVaoHD(ActionEvent evt) throws SQLException {
         SanPham selectedObject = (SanPham) tbProc.getSelectionModel().getSelectedItem();
 
+        this.txtTienKHDua.setDisable(false);
+
         if (selectedObject != null) {
             GiamGiaService loadKM = new GiamGiaService();
             List<GiamGia> s = loadKM.getGiamGia();
@@ -398,16 +401,21 @@ public class BanHang {
             for (KhachHang c : k) {
 
                 if (c.getIdKH() == idkh) {
+                    LocalDate khachhangns = c.getNgaySinh().toLocalDate();
+                    int nskh = khachhangns.getDayOfMonth();
+                    int thangkh = khachhangns.getMonthValue();
                     LocalDate hientai = LocalDate.now();
-                    if (hientai.compareTo(c.getNgaySinh().toLocalDate()) == 0) {
+                    int thanght = hientai.getMonthValue();
+                    int ngayht = hientai.getDayOfMonth();
+                    if (nskh == ngayht && thangkh == thanght) {
                         ktkm = true;
                         break;
                     }
                 }
             }
         }
-        if(ktkm && tong > 1000000){
-            tong = (long) (tong - tong*0.1);
+        if (ktkm && tong > 1000000) {
+            tong = (long) (tong - tong * 0.1);
         }
         return tong;
     }

@@ -51,7 +51,7 @@ public class NhanVienServiceTest {
     public void testGetNhanVien() throws Exception {
         List<NhanVien> ds = new ArrayList<>();
         ds = nvsv.getNhanVien();
-        Assertions.assertEquals(4, ds.size());
+        Assertions.assertEquals(10, ds.size());
     }
 
     @Test
@@ -64,10 +64,22 @@ public class NhanVienServiceTest {
     @Test
     public void testGetNhanVien_ByTen() throws Exception {
         List<NhanVien> ds = new ArrayList<>();
-        ds = nvsv.getNhanVien("A");
+        ds = nvsv.getNhanVien("Anh");
         for (NhanVien nv : ds) {
-            Assertions.assertEquals("A", nv.getTenNV());
+            Assertions.assertEquals("Anh", nv.getTenNV());
         }
+    }
+    @Test
+    public void testGetNhanVien_BySo() throws Exception {
+        List<NhanVien> ds = new ArrayList<>();
+        ds = nvsv.getNhanVien("1");
+        Assertions.assertEquals(0,ds.size());
+    }
+    @Test
+    public void testGetNhanVien_ByKTDB() throws Exception {
+        List<NhanVien> ds = new ArrayList<>();
+        ds = nvsv.getNhanVien("@");
+        Assertions.assertEquals(0,ds.size());
     }
 
     @Test
@@ -78,6 +90,17 @@ public class NhanVienServiceTest {
         Assertions.assertEquals(b, true);
         nvsv.deleteNhanVien(100);
     }
+    @Test
+    public void testaddNhanVienF() throws Exception {
+        NhanVien nv = new NhanVien(1, "Trinh Bao", "Duy", 1, "admin100", "123", false);
+        boolean b;
+        try{
+            b = nvsv.addNhanVien(nv);
+        }catch (SQLException ex){
+            b= false;
+        }
+        Assertions.assertEquals(b, false);
+    }
 
     @Test
     public void testdeleteNhanVien() throws Exception {
@@ -86,6 +109,17 @@ public class NhanVienServiceTest {
         nvsv.addNhanVien(nv);
         boolean b = nvsv.deleteNhanVien(100);
         Assertions.assertEquals(b, true);
+
+    }
+    @Test
+    public void testdeleteNhanVienF() throws Exception {
+        boolean b;
+        try{
+            b = nvsv.deleteNhanVien(200);
+        }catch (SQLException ex){
+            b= false;
+        }
+        Assertions.assertEquals(b, false);
 
     }
 

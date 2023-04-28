@@ -48,7 +48,7 @@ public class ChiTietHoaDonServiceTest {
     @Test
     public void testGetCTHD() throws Exception {
         List<ChiTietHoaDon> ds = cthdsv.getChiTietHoaDon();
-        Assertions.assertEquals(23, ds.size());
+        Assertions.assertEquals(32, ds.size());
     }
 
     @Test

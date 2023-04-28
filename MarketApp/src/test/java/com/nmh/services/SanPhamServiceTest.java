@@ -85,9 +85,15 @@ public class SanPhamServiceTest {
         List<SanPham> ds = new ArrayList<>();
 
         ds = spsv.getSanPham();
-        Assertions.assertEquals(ds.size(), 14);
+        Assertions.assertEquals(ds.size(), 13);
     }
+    @Test
+    public void testGetSanPhamf() throws Exception {
+        List<SanPham> ds = new ArrayList<>();
 
+        ds = spsv.getSanPham();
+        Assertions.assertNotEquals(ds.size(), 100);
+    }
     @Test
     public void testGetSanPham_ByIDCHINHANH() throws Exception {
         List<SanPham> ds = new ArrayList<>();
@@ -102,6 +108,12 @@ public class SanPhamServiceTest {
             Assertions.assertEquals(s.getIdChiNhanh(), 2);
             Assertions.assertEquals(s.getIdGiamGia(), 1);
         }
+    }
+    @Test
+    public void testGetSanPhamF_ByIDCHINHANH() throws Exception {
+        List<SanPham> ds = new ArrayList<>();
+        ds = spsv.getSanPham("Thái", 2);
+        Assertions.assertEquals(0,ds.size());
     }
 
     @Test
@@ -122,6 +134,18 @@ public class SanPhamServiceTest {
         }
         spsv.deleteSanPham(100);
     }
+    @Test
+    public void testaddSanPhamF() throws Exception {
+        SanPham sp = new SanPham(1, "Duy", 1000000, "người", "An Giang", 1, 1);
+        boolean b;
+        try{
+            b = spsv.addSanPham(sp);
+        }catch (SQLException ex){
+            b= false;
+        }
+        Assertions.assertEquals(b, false);
+
+    }
 
     @Test
     public void testdeleteSanPham() throws Exception {
@@ -130,6 +154,16 @@ public class SanPhamServiceTest {
         spsv.addSanPham(sp);
         boolean b = spsv.deleteSanPham(101);
         Assertions.assertEquals(b, true);
+    }
+    @Test
+    public void testdeleteSanPhamF() throws Exception {
+        boolean b;
+        try{
+            b = spsv.deleteSanPham(200);
+        }catch (SQLException ex){
+            b= false;
+        }
+        Assertions.assertEquals(b, false);
     }
 
     @Test

@@ -53,6 +53,14 @@ public class ChiNhanhServiceTest {
             Assertions.assertEquals("Hồ Chí Minh", cn.getDiaChi());
         }
     }
+    @Test
+    public void testGetChiNhanh_byDiaChiF() throws Exception {
+        List<ChiNhanh> ds = new ArrayList<>();
+        ds = cnsv.getChiNhanh("Nhat Ban");
+        for (ChiNhanh cn : ds) {
+            Assertions.assertNotEquals(cn.getDiaChi(),"Nhật Bản");
+        }
+    }
 
     @Test
     public void testGetChiNhanh_byMaDiaChi_1() throws Exception {
@@ -60,7 +68,9 @@ public class ChiNhanhServiceTest {
         ds = cnsv.getChiNhanh(1);
         for (ChiNhanh cn : ds) {
             Assertions.assertEquals("Hà Nội", cn.getDiaChi());
+
         }
+        Assertions.assertEquals(ds.size(),1);
     }
 
     @Test
@@ -76,6 +86,12 @@ public class ChiNhanhServiceTest {
         ds = cnsv.getChiNhanh();
         Assertions.assertEquals(8, ds.size());
     }
+    @Test
+    public void testGetChiNhanhF() throws Exception {
+        List<ChiNhanh> ds = new ArrayList<>();
+        ds = cnsv.getChiNhanh();
+        Assertions.assertNotEquals(30, ds.size());
+    }
 
     @Test
     public void testaddChiNhanh() throws Exception {
@@ -85,6 +101,20 @@ public class ChiNhanhServiceTest {
         boolean b = cnsv.addChiNhanh(cn);
         Assertions.assertEquals(b, true);
         cnsv.deleteChiNhanh(10);
+    }
+    @Test
+    public void testaddChiNhanhF() throws Exception {
+//        cnsv.deleteChiNhanh(10);
+        List<ChiNhanh> ds = new ArrayList<>();
+        boolean b;
+        ChiNhanh cn = new ChiNhanh("test", 1);
+        try {
+            b = cnsv.addChiNhanh(cn);
+        }catch (SQLException ex){
+            b =false;
+        }
+        Assertions.assertEquals(b, false);
+//        cnsv.deleteChiNhanh(10);
     }
 
     @Test
@@ -96,7 +126,17 @@ public class ChiNhanhServiceTest {
         boolean b = cnsv.deleteChiNhanh(10);
         Assertions.assertEquals(b, true);
     }
-
+    @Test
+    public void testdeleteChiNhanhF() throws Exception {
+//        cnsv.deleteChiNhanh(10);
+        boolean b;
+        try {
+            b = cnsv.deleteChiNhanh(10);
+        }catch (SQLException ex){
+            b =false;
+        }
+        Assertions.assertEquals(b, false);
+    }
     @Test
     public void testupdateGiamGia() throws Exception {
         List<ChiNhanh> ds = new ArrayList<>();
